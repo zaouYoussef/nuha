@@ -1,0 +1,13 @@
+# Ignore heavy raw MOV and HEIC files for fast Vercel deployment
+*.MOV
+*.mov
+*.HEIC
+*.heic
+
+# Ignore Python scripts and temp files
+*.py
+*.ps1
+*.jsonl
+*.AAE
+*.aae
+.DS_Store

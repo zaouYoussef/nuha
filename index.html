@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nouhati &#8212; Notre Histoire</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#ff2d6b;--rose2:#ff6b9d;--gold:#f0c040;--deep:#04040f;--glass:rgba(255,255,255,0.04);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--deep);color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* GRAIN */
+#grain{position:fixed;inset:0;z-index:99990;pointer-events:none;opacity:.03;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+animation:gr .4s steps(2) infinite;}
+@keyframes gr{0%,100%{transform:translate(0,0)}25%{transform:translate(-2%,-3%)}50%{transform:translate(3%,1%)}75%{transform:translate(-1%,4%)}}
+
+/* LOCK SCREEN */
+#lock{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--deep);}
+#lock.out{animation:lockOut .8s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes lockOut{to{opacity:0;transform:scale(1.05);filter:blur(20px);}}
+.lbg{position:absolute;inset:0;}
+.lstar{position:absolute;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite;}
+@keyframes tw{0%,100%{opacity:.12;transform:scale(1)}50%{opacity:1;transform:scale(2);box-shadow:0 0 5px #fff;}}
+.lneb{position:absolute;border-radius:50%;filter:blur(90px);animation:nb 10s ease-in-out infinite;}
+@keyframes nb{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.1) rotate(8deg)}}
+.lc{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;padding:20px;}
+.lico{font-size:88px;animation:ipu 2s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(255,45,107,.9));margin-bottom:22px;line-height:1;}
+@keyframes ipu{0%,100%{transform:scale(1)}50%{transform:scale(1.12);filter:drop-shadow(0 0 60px rgba(255,45,107,1));}}
+.lname{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8vw,80px);font-weight:300;font-style:italic;background:linear-gradient(135deg,#fff 20%,#ffb3c6 60%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:4px;margin-bottom:6px;}
+.lsub{font-size:11px;letter-spacing:6px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:40px;}
+.pdots{display:flex;gap:22px;justify-content:center;margin-bottom:36px;}
+.dot{width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(255,45,107,.4);background:transparent;transition:all .3s cubic-bezier(.34,1.7,.64,1);}
+.dot.on{background:var(--rose);border-color:var(--rose);box-shadow:0 0 20px var(--rose),0 0 40px rgba(255,45,107,.5);transform:scale(1.3);}
+.dot.err{animation:de .5s ease;}
+@keyframes de{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.kpad{display:grid;grid-template-columns:repeat(3,72px);gap:16px;justify-content:center;}
+.key{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:24px;font-family:'Cormorant Garamond',serif;display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.34,1.7,.64,1);backdrop-filter:blur(20px);cursor:pointer;user-select:none;}
+.key:hover{background:rgba(255,45,107,.25);border-color:var(--rose);box-shadow:0 0 30px rgba(255,45,107,.4);transform:scale(1.08);}
+.key:active{transform:scale(.92);}
+.key.inv{visibility:hidden;}
+.key.del{font-size:20px;}
+.unlock-hint{margin-top:20px;font-size:12px;color:rgba(255,255,255,.4);letter-spacing:2px;}
+
+/* ENVELOPE */
+#env{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(ellipse at center,#150030,var(--deep));gap:24px;}
+#env.show{display:flex;}
+#env.out{animation:lockOut .8s ease forwards;}
+.eth{font-family:'Dancing Script',cursive;font-size:clamp(26px,5vw,48px);animation:ef 3s ease-in-out infinite;text-align:center;padding:0 20px;}
+@keyframes ef{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.esub{font-size:12px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;animation:bl2 2s ease-in-out infinite;}
+@keyframes bl2{0%,100%{opacity:.35}50%{opacity:.9}}
+.ewrap{position:relative;animation:ew 4s ease-in-out infinite;cursor:pointer;}
+@keyframes ew{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(3deg) translateY(-28px)}}
+.eglow{position:absolute;inset:-30px;background:radial-gradient(ellipse,rgba(255,45,107,.3),transparent 70%);border-radius:50%;animation:gp 2s ease-in-out infinite;}
+@keyframes gp{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.envelope{width:290px;height:190px;background:linear-gradient(160deg,#fff9f2,#ffecf2);border-radius:12px;position:relative;box-shadow:0 40px 80px rgba(255,45,107,.22),0 0 0 1px rgba(255,150,150,.25);overflow:hidden;}
+.eflap{position:absolute;top:0;left:0;width:100%;border-left:145px solid transparent;border-right:145px solid transparent;border-top:100px solid #ffcce0;transform-origin:top center;z-index:3;transition:transform .7s cubic-bezier(.68,-.55,.27,1.55);}
+.eflap.open{transform:rotateX(180deg);}
+.envelope::before{content:'';position:absolute;top:0;left:0;border-right:145px solid transparent;border-left:145px solid transparent;border-top:100px solid #ffb3cf;z-index:2;}
+.envelope::after{content:'';position:absolute;bottom:0;left:0;border-right:145px solid transparent;border-left:145px solid transparent;border-bottom:100px solid #ffe4ef;z-index:1;}
+.eheart{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:50px;z-index:4;animation:ipu 1.5s ease-in-out infinite;}
+
+/* HERO */
+#hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
+.hslide.active{opacity:1;}
+.hslide img{width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out forwards;}
+@keyframes kb{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-2%,-1.5%)}}
+.hslide:nth-child(even) img{animation:kb2 9s ease-in-out forwards;}
+@keyframes kb2{0%{transform:scale(1.1) translate(-2%,0)}100%{transform:scale(1) translate(2%,-2%)}}
+.hov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,4,15,.25) 0%,rgba(4,4,15,.05) 40%,rgba(4,4,15,.55) 80%,rgba(4,4,15,.97) 100%);z-index:2;}
+.hvig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(4,4,15,.65) 100%);z-index:2;}
+.hcont{position:relative;z-index:5;text-align:center;padding:20px;}
+.htop{font-size:11px;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;opacity:0;animation:rUp 1.2s ease .5s forwards;}
+@keyframes rUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hname{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,14vw,160px);font-weight:300;font-style:italic;line-height:.9;background:linear-gradient(160deg,#fff 0%,#ffcce0 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0;animation:rUp 1.5s ease 1s forwards;letter-spacing:-2px;}
+.htag{font-family:'Dancing Script',cursive;font-size:clamp(22px,4vw,40px);color:rgba(255,200,220,.9);margin-top:16px;opacity:0;animation:rUp 1.2s ease 1.6s forwards;}
+.hline{width:1px;height:80px;background:linear-gradient(to bottom,var(--gold),transparent);margin:40px auto 0;opacity:0;animation:rUp 1s ease 2.2s forwards;}
+.sdots{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:8px;}
+.sdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:all .4s;cursor:pointer;}
+.sdot.active{background:var(--rose);width:24px;border-radius:3px;box-shadow:0 0 10px var(--rose);}
+
+/* SECTIONS */
+section{position:relative;}
+.slbl{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;display:block;}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,6vw,68px);font-weight:300;font-style:italic;background:linear-gradient(135deg,#fff,rgba(255,200,220,.9));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:24px;}
+
+/* STATS */
+.ss{padding:120px 5vw;background:linear-gradient(180deg,var(--deep),#0d0025,var(--deep));}
+.ss .inn{max-width:900px;margin:0 auto;text-align:center;}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-top:60px;}
+.sc{background:var(--glass);border:1px solid rgba(255,45,107,.15);border-radius:24px;padding:40px 20px;position:relative;overflow:hidden;transition:all .5s cubic-bezier(.34,1.56,.64,1);}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--rose),var(--gold),transparent);}
+.sc:hover{transform:translateY(-12px) scale(1.02);border-color:rgba(255,45,107,.4);box-shadow:0 30px 60px rgba(255,45,107,.14);}
+.sico{font-size:42px;display:block;margin-bottom:16px;}
+.snum{font-family:'Cormorant Garamond',serif;font-size:62px;font-weight:300;color:var(--gold);display:block;line-height:1;}
+.slb{font-size:12px;color:rgba(255,255,255,.5);margin-top:8px;letter-spacing:1px;}
+
+/* GALLERY */
+.gs{padding:120px 5vw;background:linear-gradient(180deg,var(--deep),#0a0018,var(--deep));}
+.gs .inn{max-width:1600px;margin:0 auto;}
+.gh{text-align:center;margin-bottom:80px;}
+.gh p{color:rgba(255,255,255,.5);font-size:16px;line-height:1.7;max-width:500px;margin:0 auto;}
+.masonry{columns:4 220px;gap:14px;}
+@media(max-width:600px){.masonry{columns:2 130px;gap:8px;}}
+.pi{break-inside:avoid;margin-bottom:14px;position:relative;border-radius:14px;overflow:hidden;transform-style:preserve-3d;cursor:pointer;background:#0d0a1a;}
+.pi img{width:100%;display:block;transition:transform .6s ease;border-radius:14px;}
+.pi:hover img{transform:scale(1.06);}
+.pov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent 55%);opacity:0;transition:opacity .4s;border-radius:14px;display:flex;align-items:flex-end;padding:16px;}
+.pi:hover .pov{opacity:1;}
+.pcap{font-family:'Dancing Script',cursive;font-size:18px;color:rgba(255,255,255,.95);}
+
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.97);backdrop-filter:blur(30px);}
+#lb.open{display:flex;}
+#lb img{max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 0 100px rgba(255,45,107,.18);}
+.lbx{position:absolute;top:22px;right:24px;font-size:36px;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;transition:all .3s;}
+.lbx:hover{color:var(--rose);transform:rotate(90deg) scale(1.2);}
+.lbn{position:absolute;top:50%;transform:translateY(-50%);font-size:56px;color:rgba(255,255,255,.25);background:none;border:none;cursor:pointer;transition:all .3s;padding:20px;}
+.lbn:hover{color:#fff;}
+.lbl{left:0;}.lbr{right:0;}
+.lbi{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);text-align:center;}
+.lbcap{font-family:'Dancing Script',cursive;font-size:22px;color:rgba(255,255,255,.65);}
+.lbnum{font-size:12px;color:rgba(255,255,255,.28);letter-spacing:3px;margin-top:4px;}
+
+/* REASONS */
+.rs{padding:120px 5vw;background:linear-gradient(180deg,var(--deep),#0d0018,var(--deep));}
+.rs .inn{max-width:1100px;margin:0 auto;}
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;margin-top:60px;}
+.rc{background:var(--glass);border:1px solid rgba(255,45,107,.1);border-radius:24px;padding:36px;transition:all .5s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
+.rc:hover{transform:translateY(-10px);border-color:rgba(255,45,107,.38);box-shadow:0 25px 50px rgba(255,45,107,.1);}
+.rnum{font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:300;color:rgba(240,192,64,.07);line-height:1;position:absolute;top:10px;right:14px;}
+.rico{font-size:34px;margin-bottom:14px;display:block;}
+.rtxt{font-size:16px;line-height:1.75;color:rgba(255,255,255,.8);font-style:italic;}
+
+/* LETTER */
+.ls{padding:140px 5vw;background:linear-gradient(135deg,#0a0018,#180008,#04040f);}
+.ls .inn{max-width:780px;margin:0 auto;}
+.lw{background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,200,220,.02));border:1px solid rgba(255,45,107,.15);border-radius:32px;padding:70px 60px;position:relative;overflow:hidden;}
+.lw::before{content:'"';position:absolute;top:-30px;left:28px;font-family:'Cormorant Garamond',serif;font-size:180px;font-weight:300;color:rgba(255,45,107,.06);line-height:1;pointer-events:none;}
+.lw::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--rose),var(--gold),transparent);}
+.ldate{font-size:11px;letter-spacing:5px;color:var(--gold);margin-bottom:40px;text-transform:uppercase;}
+.ltxt{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,30px);font-style:italic;line-height:2;color:rgba(255,255,255,.9);}
+.ltxt .hl{color:var(--rose2);}
+.lsig{margin-top:50px;font-family:'Dancing Script',cursive;font-size:32px;color:var(--rose);text-align:right;}
+.cbl{display:inline-block;width:2px;height:1.1em;background:var(--rose);margin-left:3px;vertical-align:text-bottom;animation:bl 1s step-end infinite;}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
+@media(max-width:768px){.lw{padding:40px 28px;}}
+
+/* FINALE */
+.fin{padding:160px 20px;background:radial-gradient(ellipse at center,#280045,#0c0010 50%,var(--deep));text-align:center;position:relative;overflow:hidden;}
+.fheart{font-size:100px;display:block;animation:ipu 2s ease-in-out infinite;filter:drop-shadow(0 0 60px rgba(255,45,107,1));margin-bottom:40px;}
+.ftitle{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,10vw,100px);font-weight:300;font-style:italic;background:linear-gradient(135deg,#fff,#ffcce0 40%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:24px;animation:shim 4s linear infinite;background-size:300%;}
+@keyframes shim{0%{background-position:0%}100%{background-position:300%}}
+.fsub{font-family:'Dancing Script',cursive;font-size:clamp(24px,4vw,42px);color:rgba(255,200,220,.85);margin-bottom:28px;}
+.fp{font-size:17px;color:rgba(255,255,255,.4);line-height:1.9;max-width:520px;margin:0 auto;}
+.fst{position:absolute;font-size:20px;animation:sb 4s ease-in-out infinite;pointer-events:none;}
+@keyframes sb{0%,100%{opacity:0;transform:scale(.4) rotate(0deg)}40%,60%{opacity:1;transform:scale(1.3) rotate(200deg)}}
+
+/* CONFETTI */
+.ch{position:fixed;pointer-events:none;z-index:9998;animation:cf linear forwards;}
+@keyframes cf{0%{opacity:1;transform:translateY(-10px) rotate(0deg) scale(1);}100%{opacity:0;transform:translateY(120vh) rotate(720deg) scale(.3);}}
+.fh{position:fixed;pointer-events:none;z-index:9997;animation:fu 2.5s ease-out forwards;}
+@keyframes fu{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-180px) scale(.4)}}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(55px);transition:opacity .9s cubic-bezier(.34,1.26,.64,1),transform .9s cubic-bezier(.34,1.26,.64,1);}
+.rv.in{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}
+</style>
+</head>
+<body>
+<div id="grain"></div>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button class="lbx" onclick="lbClose()">&#10005;</button>
+  <button class="lbn lbl" onclick="lbNav(-1)">&#10094;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lbn lbr" onclick="lbNav(1)">&#10095;</button>
+  <div class="lbi">
+    <div class="lbcap" id="lb-cap"></div>
+    <div class="lbnum" id="lb-num"></div>
+  </div>
+</div>
+
+<!-- LOCK SCREEN -->
+<div id="lock">
+  <div class="lbg" id="lbg">
+    <div class="lneb" style="width:700px;height:700px;background:radial-gradient(circle,rgba(160,0,90,.28),transparent);top:-150px;left:-150px;animation-duration:14s;"></div>
+    <div class="lneb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(60,0,180,.22),transparent);bottom:-80px;right:-80px;animation-duration:11s;animation-delay:5s;"></div>
+    <div class="lneb" style="width:350px;height:350px;background:radial-gradient(circle,rgba(240,192,64,.12),transparent);top:30%;right:20%;animation-duration:16s;animation-delay:3s;"></div>
+  </div>
+  <div class="lc">
+    <div class="lico">&#128150;</div>
+    <h1 class="lname">Nouhati</h1>
+    <p class="lsub">Entre le code de notre amour (1234)</p>
+    <div class="pdots">
+      <div class="dot" id="d0"></div><div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div><div class="dot" id="d3"></div>
+    </div>
+    <div class="kpad">
+      <button class="key" onclick="kp('1')">1</button>
+      <button class="key" onclick="kp('2')">2</button>
+      <button class="key" onclick="kp('3')">3</button>
+      <button class="key" onclick="kp('4')">4</button>
+      <button class="key" onclick="kp('5')">5</button>
+      <button class="key" onclick="kp('6')">6</button>
+      <button class="key" onclick="kp('7')">7</button>
+      <button class="key" onclick="kp('8')">8</button>
+      <button class="key" onclick="kp('9')">9</button>
+      <button class="key inv"></button>
+      <button class="key" onclick="kp('0')">0</button>
+      <button class="key del" onclick="kpDel()">&#9003;</button>
+    </div>
+    <p class="unlock-hint">Ou tape 1234 sur ton clavier</p>
+  </div>
+</div>
+
+<!-- ENVELOPE -->
+<div id="env">
+  <h2 class="eth">Tu as un message&#8230; &#128140;</h2>
+  <p class="esub">Clique pour ouvrir</p>
+  <div class="ewrap" onclick="envOpen()">
+    <div class="eglow"></div>
+    <div class="envelope">
+      <div class="eflap" id="eflap"></div>
+      <span class="eheart">&#128150;</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN EXPERIENCE -->
+<main id="main" style="display:none;">
+
+<section id="hero">
+  <div id="hslides"></div>
+  <div class="hov"></div><div class="hvig"></div>
+  <div class="hcont">
+    <p class="htop">&#8212; Notre Histoire &#8212;</p>
+    <h1 class="hname">Nouhati</h1>
+    <p class="htag">Mon univers. Mon tout. &#10025;</p>
+    <div class="hline"></div>
+  </div>
+  <div class="sdots" id="sdots"></div>
+</section>
+
+<section class="ss">
+  <div class="inn">
+    <div class="rv" style="text-align:center;">
+      <span class="slbl">Notre Histoire en Chiffres</span>
+      <h2 class="stitle">Ce que nous avons construit</h2>
+    </div>
+    <div class="sgrid">
+      <div class="sc rv d1"><span class="sico">&#128248;</span><span class="snum" data-to="263">0</span><span class="slb">Souvenirs de nous</span></div>
+      <div class="sc rv d2"><span class="sico">&#128150;</span><span class="snum">&#8734;</span><span class="slb">Mon amour pour toi</span></div>
+      <div class="sc rv d3"><span class="sico">&#11088;</span><span class="snum" data-to="1">0</span><span class="slb">Toi &mdash; unique au monde</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="gs">
+  <div class="inn">
+    <div class="gh rv">
+      <span class="slbl">Toute notre galerie</span>
+      <h2 class="stitle">Nous &mdash; Ensemble</h2>
+      <p>Chaque photo ici est un tr&eacute;sor. Chaque regard est une preuve d&apos;amour. Clique pour agrandir.</p>
+    </div>
+    <div class="masonry" id="gallery"></div>
+  </div>
+</section>
+
+<section class="rs">
+  <div class="inn">
+    <div class="rv" style="text-align:center;">
+      <span class="slbl">Pourquoi je t&apos;aime</span>
+      <h2 class="stitle">Des raisons infinies&hellip;</h2>
+    </div>
+    <div class="rg" id="rgrid"></div>
+  </div>
+</section>
+
+<section class="ls">
+  <div class="inn">
+    <div class="rv" style="text-align:center;margin-bottom:60px;">
+      <span class="slbl">Du fond du c&#339;ur</span>
+      <h2 class="stitle">Ma Lettre Pour Toi</h2>
+    </div>
+    <div class="lw rv">
+      <div class="ldate" id="ldate"></div>
+      <div class="ltxt" id="ltxt"></div>
+      <div class="lsig">Pour toujours tien &#10084;&#65039;</div>
+    </div>
+  </div>
+</section>
+
+<section class="fin">
+  <span class="fst" style="top:8%;left:8%;animation-delay:.0s">&#10025;</span>
+  <span class="fst" style="top:15%;right:12%;animation-delay:.8s">&#10024;</span>
+  <span class="fst" style="bottom:25%;left:6%;animation-delay:1.6s">&#11088;</span>
+  <span class="fst" style="bottom:15%;right:8%;animation-delay:.4s">&#127775;</span>
+  <span class="fst" style="top:50%;left:3%;animation-delay:2.4s">&#10025;</span>
+  <span class="fst" style="top:35%;right:4%;animation-delay:1.2s">&#10024;</span>
+  <span class="fst" style="top:70%;left:14%;animation-delay:2s">&#128149;</span>
+  <span class="fst" style="top:60%;right:14%;animation-delay:.6s">&#128150;</span>
+  <span class="fheart">&#128150;</span>
+  <h2 class="ftitle">Je t&apos;aime, Nouhati</h2>
+  <p class="fsub">Jusqu&apos;&agrave; la lune et retour&hellip; et encore &#127769;</p>
+  <p class="fp">Merci d&apos;exister. Merci d&apos;&ecirc;tre toi. Merci de m&apos;aimer.<br>Tu es mon soleil quand tout est sombre.<br>Ma paix dans le chaos. Mon tout.<br><br>Ce site n&apos;est qu&apos;une minuscule preuve<br>d&apos;un amour qui n&apos;a pas de fin.</p>
+</section>
+
+</main>
+
+<script>
+var allPhotos = ["BBSV6598.JPG", "photos_converted/IMG_3747.jpg", "photos_converted/IMG_3801.jpg", "MRQV1531.JPG", "photos_converted/IMG_3719.jpg", "EIPR0684.JPG", "IUMK6211.JPG", "photos_converted/IMG_3644.jpg", "photos_converted/IMG_3720.jpg", "photos_converted/IMG_3888.jpg", "photos_converted/IMG_3822.jpg", "photos_converted/IMG_3860.jpg", "photos_converted/IMG_4422.jpg", "photos_converted/IMG_3675.jpg", "photos_converted/IMG_3809.jpg", "HHCQ7236.JPG", "MWQO5186.JPG", "photos_converted/IMG_3700.jpg", "photos_converted/IMG_4417.jpg", "photos_converted/IMG_4432.jpg", "photos_converted/IMG_3738.jpg", "photos_converted/IMG_4430.jpg", "photos_converted/IMG_3748.jpg", "photos_converted/IMG_3887.jpg", "photos_converted/IMG_3868.jpg", "photos_converted/IMG_3689.jpg", "photos_converted/IMG_3892.jpg", "photos_converted/IMG_3848.jpg", "photos_converted/IMG_3836.jpg", "photos_converted/IMG_3770.jpg", "photos_converted/IMG_3753.jpg", "photos_converted/IMG_3669.jpg", "photos_converted/IMG_3827.jpg", "photos_converted/IMG_3862.jpg", "photos_converted/IMG_3750.jpg", "photos_converted/IMG_3736.jpg", "photos_converted/IMG_3772.jpg", "photos_converted/IMG_3707.jpg", "photos_converted/IMG_3668.jpg", "IMG_3518.JPG", "IMG_3524.JPG", "photos_converted/IMG_3640.jpg", "photos_converted/IMG_3727.jpg", "photos_converted/IMG_3755.jpg", "photos_converted/IMG_4423.jpg", "photos_converted/IMG_3855.jpg", "photos_converted/IMG_3688.jpg", "photos_converted/IMG_3637.jpg", "photos_converted/IMG_3655.jpg", "MIEN7275.JPG", "photos_converted/IMG_3670.jpg", "photos_converted/IMG_3876.jpg", "photos_converted/IMG_3677.jpg", "photos_converted/IMG_3802.jpg", "OUMF0248.JPG", "photos_converted/IMG_3824.jpg", "photos_converted/IMG_3742.jpg", "photos_converted/IMG_3885.jpg", "photos_converted/IMG_3733.jpg", "photos_converted/IMG_3847.jpg", "photos_converted/IMG_3725.jpg", "photos_converted/IMG_3840.jpg", "IMG_3882.PNG", "photos_converted/IMG_3657.jpg", "photos_converted/IMG_3717.jpg", "photos_converted/IMG_3724.jpg", "photos_converted/IMG_3665.jpg", "photos_converted/IMG_3641.jpg", "AEOV6284.JPG", "photos_converted/IMG_3709.jpg", "photos_converted/IMG_3865.jpg", "photos_converted/IMG_3683.jpg", "photos_converted/IMG_3859.jpg", "photos_converted/IMG_3749.jpg", "QOEM8787.JPG", "photos_converted/IMG_3660.jpg", "photos_converted/IMG_3819.jpg", "photos_converted/IMG_3858.jpg", "photos_converted/IMG_3880.jpg", "photos_converted/IMG_3745.jpg", "YIHY4449.JPG", "photos_converted/IMG_3861.jpg", "photos_converted/IMG_3722.jpg", "photos_converted/IMG_3890.jpg", "AMMF6609.JPG", "photos_converted/IMG_3659.jpg", "photos_converted/IMG_3695.jpg", "photos_converted/IMG_3730.jpg", "photos_converted/IMG_3726.jpg", "photos_converted/IMG_3831.jpg", "photos_converted/IMG_3817.jpg", "IMG_3571.PNG", "photos_converted/IMG_3694.jpg", "photos_converted/IMG_3850.jpg", "photos_converted/IMG_3716.jpg", "photos_converted/IMG_3838.jpg", "photos_converted/IMG_3889.jpg", "XYZC3555.JPG", "OJZT9995.JPG", "photos_converted/IMG_3828.jpg", "photos_converted/IMG_4431.jpg", "photos_converted/IMG_3839.jpg", "photos_converted/IMG_3639.jpg", "photos_converted/IMG_3679.jpg", "photos_converted/IMG_3843.jpg", "photos_converted/IMG_3773.jpg", "photos_converted/IMG_4424.jpg", "photos_converted/IMG_3884.jpg", "photos_converted/IMG_3837.jpg", "photos_converted/IMG_3845.jpg", "photos_converted/IMG_3867.jpg", "photos_converted/IMG_3667.jpg", "photos_converted/IMG_3701.jpg", "photos_converted/IMG_3842.jpg", "photos_converted/IMG_3708.jpg", "FWYZ5957.JPG", "photos_converted/IMG_4419.jpg", "photos_converted/IMG_3869.jpg", "photos_converted/IMG_3647.jpg", "photos_converted/IMG_3729.jpg", "IMG_3602.PNG", "photos_converted/IMG_3846.jpg", "photos_converted/IMG_3652.jpg", "photos_converted/IMG_3857.jpg", "photos_converted/IMG_3739.jpg", "photos_converted/IMG_3807.jpg", "photos_converted/IMG_3774.jpg", "photos_converted/IMG_3687.jpg", "photos_converted/IMG_3841.jpg", "photos_converted/IMG_3732.jpg", "photos_converted/IMG_3693.jpg", "EOEO5284.JPG", "photos_converted/IMG_3703.jpg", "photos_converted/IMG_3820.jpg", "IMG_3592.JPG", "IMG_E3537.JPG", "photos_converted/IMG_3711.jpg", "photos_converted/IMG_3704.jpg", "photos_converted/IMG_3752.jpg", "photos_converted/IMG_3734.jpg", "photos_converted/IMG_3874.jpg", "photos_converted/IMG_3811.jpg", "BLOF5947.JPG", "photos_converted/IMG_4434.jpg", "photos_converted/IMG_4418.jpg", "TKIC7977.JPG", "KLXR5350.JPG", "MZOI6375.JPG", "photos_converted/IMG_3756.jpg", "photos_converted/IMG_3826.jpg", "photos_converted/IMG_3853.jpg", "photos_converted/IMG_3751.jpg", "photos_converted/IMG_3810.jpg", "photos_converted/IMG_3674.jpg", "photos_converted/IMG_3723.jpg", "photos_converted/IMG_3699.jpg", "IMG_3537.JPG", "photos_converted/IMG_3671.jpg", "photos_converted/IMG_3651.jpg", "photos_converted/IMG_3697.jpg", "DYOK7371.JPG", "photos_converted/IMG_3680.jpg", "photos_converted/IMG_3690.jpg", "MPGX7641.JPG", "photos_converted/IMG_3653.jpg", "IMG_3525.JPG", "photos_converted/IMG_3662.jpg", "photos_converted/IMG_3812.jpg", "photos_converted/IMG_4429.jpg", "photos_converted/IMG_3728.jpg", "photos_converted/IMG_3800.jpg", "DGSD7030.JPG", "photos_converted/IMG_3684.jpg", "IMG_3636.JPG", "photos_converted/IMG_3805.jpg", "IMG_3599.PNG", "photos_converted/IMG_4428.jpg", "IMG_3595.PNG", "photos_converted/IMG_3769.jpg", "photos_converted/IMG_3757.jpg", "UXSM7004.JPG", "photos_converted/IMG_3658.jpg", "photos_converted/IMG_3818.jpg", "photos_converted/IMG_3816.jpg", "photos_converted/IMG_3771.jpg", "photos_converted/IMG_3646.jpg", "photos_converted/IMG_3849.jpg", "photos_converted/IMG_3873.jpg", "photos_converted/IMG_3696.jpg", "photos_converted/IMG_3678.jpg", "photos_converted/IMG_3823.jpg", "photos_converted/IMG_3743.jpg", "photos_converted/IMG_3741.jpg", "IMG_3573.JPG", "photos_converted/IMG_3737.jpg", "IMG_3600.PNG", "KKLY6169.JPG", "photos_converted/IMG_3642.jpg", "photos_converted/IMG_3638.jpg", "photos_converted/IMG_3830.jpg", "photos_converted/IMG_3870.jpg", "photos_converted/IMG_4433.jpg", "photos_converted/IMG_3702.jpg", "photos_converted/IMG_3813.jpg", "photos_converted/IMG_3681.jpg", "photos_converted/IMG_3664.jpg", "photos_converted/IMG_3721.jpg", "photos_converted/IMG_3740.jpg", "photos_converted/IMG_3803.jpg", "photos_converted/IMG_3712.jpg", "photos_converted/IMG_4416.jpg", "photos_converted/IMG_3650.jpg", "photos_converted/IMG_4421.jpg", "photos_converted/IMG_3713.jpg", "FKGT0488.JPG", "photos_converted/IMG_3856.jpg", "photos_converted/IMG_3894.jpg", "photos_converted/IMG_3661.jpg", "IMG_3574.JPG", "SEKW9704.JPG", "photos_converted/IMG_3893.jpg", "photos_converted/IMG_3832.jpg", "AOWQ0084.JPG", "NHQH2863.JPG", "photos_converted/IMG_4420.jpg", "photos_converted/IMG_3735.jpg", "photos_converted/IMG_3705.jpg", "photos_converted/IMG_3673.jpg", "photos_converted/IMG_3654.jpg", "photos_converted/IMG_3663.jpg", "photos_converted/IMG_3877.jpg", "photos_converted/IMG_3815.jpg", "photos_converted/IMG_3682.jpg", "photos_converted/IMG_3691.jpg", "photos_converted/IMG_3829.jpg", "photos_converted/IMG_3698.jpg", "photos_converted/IMG_3808.jpg", "photos_converted/IMG_3875.jpg", "photos_converted/IMG_3643.jpg", "photos_converted/IMG_3891.jpg", "photos_converted/IMG_3744.jpg", "photos_converted/IMG_3731.jpg", "WBRR0623.JPG", "VZHY7170.JPG", "photos_converted/IMG_3710.jpg", "photos_converted/IMG_3656.jpg", "photos_converted/IMG_3666.jpg", "photos_converted/IMG_3706.jpg", "photos_converted/IMG_3844.jpg", "photos_converted/IMG_3806.jpg", "photos_converted/IMG_3754.jpg", "photos_converted/IMG_3649.jpg", "photos_converted/IMG_3825.jpg", "photos_converted/IMG_3715.jpg", "photos_converted/IMG_3718.jpg", "DTBY9373.JPG", "UEMR2813.JPG", "photos_converted/IMG_3746.jpg", "photos_converted/IMG_3714.jpg", "photos_converted/IMG_3835.jpg", "photos_converted/IMG_4435.jpg", "photos_converted/IMG_3886.jpg", "photos_converted/IMG_3645.jpg"];
+var slideshowPhotos = ["BBSV6598.JPG", "photos_converted/IMG_3747.jpg", "photos_converted/IMG_3801.jpg", "MRQV1531.JPG", "photos_converted/IMG_3719.jpg", "EIPR0684.JPG", "IUMK6211.JPG", "photos_converted/IMG_3644.jpg", "photos_converted/IMG_3720.jpg", "photos_converted/IMG_3888.jpg", "photos_converted/IMG_3822.jpg", "photos_converted/IMG_3860.jpg", "photos_converted/IMG_4422.jpg", "photos_converted/IMG_3675.jpg", "photos_converted/IMG_3809.jpg", "HHCQ7236.JPG", "MWQO5186.JPG", "photos_converted/IMG_3700.jpg", "photos_converted/IMG_4417.jpg", "photos_converted/IMG_4432.jpg"];
+
+var captions=[
+  'Mon sourire préféré','Juste toi et moi','Ce regard...','Toujours dans mon cœur',
+  'Notre magie','Indéscriptible beauté','Mon monde','Je ne me lasse jamais',
+  'Tellement belle','Tu rayonnes','Mon bonheur','Pour toujours',
+  "Je t'aime",'Mon tout','Souvenirs précieux','Moment magique',
+  'Ma lumière','Douce perfection','Tu es unique','Mon amour',
+  'Une photo, mille émotions','Notre histoire','Gravé dans mon cœur',
+  'Nos instants volés','Inoubliable','Tu es ma vie','Ma raison de sourire',
+  'Chaque jour avec toi','Le plus beau des souvenirs',"Rien qu'a toi",'Mon infini'
+];
+var reasons=[
+  {i:'&#128522;',t:'Ton sourire qui éclaire même les jours les plus sombres'},
+  {i:'&#127925;',t:'Ta façon de chanter sans te soucier de personne'},
+  {i:'&#128514;',t:'Ton rire contagieux qui me fait rire aux larmes'},
+  {i:'&#127769;',t:'Nos conversations tard dans la nuit qui n’en finissent jamais'},
+  {i:'&#128170;',t:'Ta force et ta résilience qui m’inspirent chaque jour'},
+  {i:'&#127800;',t:'Ta douceur et ta gentillesse avec tout le monde'},
+  {i:'&#10025;',t:'Le fait que tu es toi — unique, irremplaçable, parfaite'},
+  {i:'&#127968;',t:'Le sentiment de «chez moi» que j’ai dans tes bras'},
+  {i:'&#128065;',t:'Tes yeux qui me disent tout sans un seul mot'},
+  {i:'&#129303;',t:'Tes câlins qui guérissent absolument tout'},
+  {i:'&#127775;',t:'Ta façon de me voir mieux que je ne me vois moi-même'},
+  {i:'&#127919;',t:'Ta passion et ta détermination dans tout ce que tu fais'},
+];
+
+// STARS BACKGROUND
+(function(){
+  var bg=document.getElementById('lbg');
+  if(!bg)return;
+  for(var i=0;i<200;i++){
+    var s=document.createElement('div');s.className='lstar';
+    var sz=Math.random()*2.5+.4;
+    s.style.cssText='width:'+sz+'px;height:'+sz+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;position:absolute;border-radius:50%;background:#fff;animation-delay:'+Math.random()*4+'s;animation-duration:'+(2+Math.random()*4)+'s;';
+    bg.appendChild(s);
+  }
+})();
+
+// PIN CODE LOGIC
+var pin='';
+function ud(){
+  for(var i=0;i<4;i++){
+    var d=document.getElementById('d'+i);
+    if(d) d.className='dot'+(i<pin.length?' on':'');
+  }
+}
+function kp(n){
+  if(pin.length<4){
+    pin+=n;
+    ud();
+    if(pin.length===4){
+      setTimeout(function(){
+        if(pin==='1234'){
+          unlock();
+        }else{
+          document.querySelectorAll('.dot').forEach(function(d){d.classList.add('err');});
+          setTimeout(function(){pin='';ud();},600);
+        }
+      },300);
+    }
+  }
+}
+function kpDel(){
+  if(pin.length>0){
+    pin=pin.slice(0,-1);
+    ud();
+  }
+}
+
+// PHYSICAL KEYBOARD
+document.addEventListener('keydown', function(e){
+  var lockEl = document.getElementById('lock');
+  if(lockEl && lockEl.style.display !== 'none'){
+    if(e.key >= '0' && e.key <= '9') kp(e.key);
+    else if(e.key === 'Backspace') kpDel();
+    else if(e.key === 'Enter') unlock();
+  }
+});
+
+function spawnC(){
+  var h=document.createElement('div');h.className='ch';
+  var ha=['&#10084;','&#128149;','&#128150;','&#128151;','&#128152;','&#128153;','&#127800;','&#10024;','&#128171;','&#11088;'];
+  h.innerHTML=ha[Math.floor(Math.random()*ha.length)];
+  h.style.left=Math.random()*100+'vw';h.style.top='-30px';
+  h.style.animationDuration=(2.5+Math.random()*3)+'s';h.style.animationDelay=Math.random()*0.5+'s';
+  h.style.fontSize=(14+Math.random()*22)+'px';
+  document.body.appendChild(h);setTimeout(function(){h.remove();},6000);
+}
+
+function unlock(){
+  for(var i=0;i<100;i++){spawnC();}
+  var lockEl=document.getElementById('lock');
+  lockEl.classList.add('out');
+  setTimeout(function(){
+    lockEl.style.display='none';
+    var envEl=document.getElementById('env');
+    envEl.style.display='flex';
+    envEl.classList.add('show');
+  },800);
+}
+
+// ENVELOPE
+function envOpen(){
+  var flap=document.getElementById('eflap');
+  if(flap) flap.classList.add('open');
+  for(var i=0;i<40;i++){(function(d){setTimeout(spawnC,d);})(i*40);}
+  setTimeout(function(){
+    var envEl=document.getElementById('env');
+    envEl.classList.add('out');
+    setTimeout(function(){
+      envEl.style.display='none';
+      var mainEl=document.getElementById('main');
+      mainEl.style.display='block';
+      window.scrollTo(0,0);
+      setTimeout(initMain,200);
+    },800);
+  },900);
+}
+
+// HERO SLIDESHOW
+var si=0;
+function initSlideshow(){
+  var cont=document.getElementById('hslides'),dots=document.getElementById('sdots');
+  if(!cont) return;
+  slideshowPhotos.forEach(function(src,i){
+    var sl=document.createElement('div');sl.className='hslide'+(i===0?' active':'');
+    var img=document.createElement('img');img.src=src;img.alt='';
+    img.onerror=function(){sl.remove();};
+    sl.appendChild(img);cont.appendChild(sl);
+    var d=document.createElement('div');d.className='sdot'+(i===0?' active':'');
+    d.onclick=(function(n){return function(){goSlide(n);};})(i);
+    dots.appendChild(d);
+  });
+  setInterval(function(){goSlide((si+1)%slideshowPhotos.length);},5500);
+}
+function goSlide(n){
+  var sl=document.querySelectorAll('.hslide'),dt=document.querySelectorAll('.sdot');
+  if(!sl[n])return;
+  sl[si].classList.remove('active');dt[si].classList.remove('active');
+  si=n;sl[si].classList.add('active');dt[si].classList.add('active');
+}
+
+// GALLERY
+function initGallery(){
+  var g=document.getElementById('gallery');
+  if(!g) return;
+  allPhotos.forEach(function(src,i){
+    var item=document.createElement('div');item.className='pi rv';item.style.transitionDelay=(i%10*.04)+'s';
+    var img=document.createElement('img');img.src=src;img.alt='';img.loading='lazy';
+    img.onerror=function(){item.style.display='none';};
+    var ov=document.createElement('div');ov.className='pov';
+    var cap=document.createElement('span');cap.className='pcap';cap.textContent=captions[i%captions.length];
+    ov.appendChild(cap);item.appendChild(img);item.appendChild(ov);
+    
+    item.addEventListener('mousemove',function(e){
+      var r=item.getBoundingClientRect();
+      var dx=(e.clientX-r.left-r.width/2)/r.width*18;
+      var dy=-(e.clientY-r.top-r.height/2)/r.height*18;
+      item.style.transform='perspective(500px) rotateY('+dx+'deg) rotateX('+dy+'deg) scale(1.04)';
+      item.style.transition='transform .08s ease';
+      item.style.boxShadow='0 20px 40px rgba(255,45,107,.25)';
+    });
+    item.addEventListener('mouseleave',function(){item.style.transform='';item.style.transition='transform .5s ease';item.style.boxShadow='';});
+    item.addEventListener('click',(function(idx){return function(){lbOpen(idx);};})(i));
+    g.appendChild(item);
+  });
+}
+
+// LIGHTBOX
+var lbIdx=0;
+function lbOpen(i){lbIdx=i;lbUpd();document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';}
+function lbClose(){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+function lbUpd(){
+  var img=document.getElementById('lb-img');img.style.opacity=0;
+  setTimeout(function(){img.src=allPhotos[lbIdx];img.style.transition='opacity .35s';img.style.opacity=1;},80);
+  document.getElementById('lb-cap').textContent=captions[lbIdx%captions.length];
+  document.getElementById('lb-num').textContent=(lbIdx+1)+' / '+allPhotos.length;
+}
+function lbNav(d){lbIdx=(lbIdx+d+allPhotos.length)%allPhotos.length;lbUpd();}
+document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)lbClose();});
+document.addEventListener('keydown',function(e){if(!document.getElementById('lb').classList.contains('open'))return;if(e.key==='Escape')lbClose();if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);});
+
+// REASONS
+function initReasons(){
+  var g=document.getElementById('rgrid');
+  if(!g) return;
+  reasons.forEach(function(r,i){
+    var c=document.createElement('div');c.className='rc rv';c.style.transitionDelay=(i%4*.1)+'s';
+    c.innerHTML='<div class="rnum">'+String(i+1).padStart(2,'0')+'</div><span class="rico">'+r.i+'</span><p class="rtxt">'+r.t+'</p>';
+    g.appendChild(c);
+  });
+}
+
+// LETTER
+var llines=[
+  'Nouhati, mon amour,','',
+  "Il y a des soirs où je me retrouve à défiler nos photos, et les larmes me viennent toutes seules. Non pas de tristesse — mais d’une joie si [pure], si profonde, que mon cœur ne sait plus comment la contenir.",
+  '',"Tu es cette [rare] personne qui fait que la vie a du sens. Chaque instant passé avec toi est gravé en or dans ma mémoire. Chaque regard, chaque sourire, chaque moment banal qui devient extraordinaire parce que c’est avec [toi].",
+  '',"Je ne sais pas combien de belles choses j’aurais à traverser dans cette vie, mais je sais que sans toi, elles auraient beaucoup moins de goût.",
+  '',"Tu es mon matin et mon soir. Ma paix et mon aventure. Mon passé et mon futur. Mon [tout]."
+];
+function initLetter(){
+  var opts={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+  var dateEl = document.getElementById('ldate');
+  if(dateEl) dateEl.textContent=new Date().toLocaleDateString('fr-FR',opts).toUpperCase();
+  var el=document.getElementById('ltxt');
+  if(!el) return;
+  var full=llines.map(function(l){return l.replace(/\[([^\]]+)\]/g,'<span class="hl">$1</span>');}).join('<br>');
+  var i=0,html='';var cursor=document.createElement('span');cursor.className='cbl';el.innerHTML='';
+  function type(){
+    if(i<full.length){
+      if(full[i]==='<'){var e=full.indexOf('>',i);if(e!==-1){html+=full.slice(i,e+1);i=e+1;el.innerHTML=html;el.appendChild(cursor);setTimeout(type,0);return;}}
+      html+=full[i];i++;el.innerHTML=html;el.appendChild(cursor);
+      setTimeout(type,15);
+    }else{setTimeout(function(){cursor.remove();},3000);}
+  }
+  var obs=new IntersectionObserver(function(en){if(en[0].isIntersecting){type();obs.disconnect();}},{threshold:.3});
+  obs.observe(el);
+}
+
+// REVEAL
+function initReveal(){
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+  function ob(){document.querySelectorAll('.rv').forEach(function(el){obs.observe(el);});}
+  ob();[1000,2500,5000].forEach(function(t){setTimeout(ob,t);});
+}
+
+// COUNTERS
+function initCounters(){
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting&&e.target.getAttribute('data-to')){var t=parseInt(e.target.getAttribute('data-to')),el=e.target,c=0,step=t/(1800/16);var tm=setInterval(function(){c=Math.min(c+step,t);el.textContent=Math.floor(c)+(c>=t&&t>1?'+':'');if(c>=t)clearInterval(tm);},16);obs.unobserve(el);}});},{threshold:.5});
+  document.querySelectorAll('[data-to]').forEach(function(el){obs.observe(el);});
+}
+
+// CLICK HEARTS
+var hch=['&#10084;','&#128149;','&#128150;','&#128151;','&#128152;','&#127800;','&#10024;','&#128171;','&#127769;','&#11088;'];
+document.addEventListener('click',function(e){
+  if(e.target.closest('#lb')||e.target.closest('.kpad')||e.target.closest('video')||e.target.closest('iframe')||e.target.closest('#lock')||e.target.closest('#env'))return;
+  var h=document.createElement('div');h.className='fh';h.innerHTML=hch[Math.floor(Math.random()*hch.length)];
+  h.style.left=(e.clientX-11)+'px';h.style.top=(e.clientY-11)+'px';
+  document.body.appendChild(h);setTimeout(function(){h.remove();},2500);
+});
+
+// INIT
+function initMain(){
+  initSlideshow();initGallery();initReasons();initLetter();initReveal();initCounters();
+}
+</script>
+</body>
+</html>
