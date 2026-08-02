@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Nouhati &#8212; Notre Histoire</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--rose:#ff2d6b;--rose2:#ff6b9d;--gold:#f0c040;--deep:#04040f;--glass:rgba(255,255,255,0.04);--violet:#9b5de5;--violet2:#c77dff;}
-*{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html{scroll-behavior:smooth;overflow-x:hidden;scroll-snap-type:y proximity;}
 #main>section{scroll-snap-align:start;}
 body{background:var(--deep);color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none;}
@@ -1503,9 +1503,13 @@ function initSlideshow(){
     var sl=document.createElement('div');sl.className='hslide'+(i===0?' active':'');
     var m;
     if(isVideo(src)){
-      m=document.createElement('video');m.src=src;m.muted=true;m.loop=true;m.autoplay=true;m.playsInline=true;m.preload='auto';
+      m=document.createElement('video');m.muted=true;m.loop=true;m.playsInline=true;m.setAttribute('playsinline','');
+      if(i===0){m.preload='auto';m.autoplay=true;}
+      else{m.preload='metadata';}
+      m.src=driveUrl(src);
+      m.play().catch(function(){});
     }else{
-      m=document.createElement('img');m.src=src;m.alt='';
+      m=document.createElement('img');m.src=driveUrl(src);m.alt='';
     }
     m.onerror=function(){sl.remove();};
     sl.appendChild(m);cont.appendChild(sl);
@@ -1518,8 +1522,12 @@ function initSlideshow(){
 function goSlide(n){
   var sl=document.querySelectorAll('.hslide'),dt=document.querySelectorAll('.sdot');
   if(!sl[n])return;
-  sl[si].classList.remove('active');dt[si].classList.remove('active');
-  si=n;sl[si].classList.add('active');dt[si].classList.add('active');
+  var prev=sl[si],next=sl[n];
+  prev.classList.remove('active');dt[si].classList.remove('active');
+  var pv=prev.querySelector('video');if(pv)pv.pause();
+  si=n;next.classList.add('active');dt[si].classList.add('active');
+  var nv=next.querySelector('video');
+  if(nv){nv.preload='auto';nv.play().catch(function(){});}
 }
 
 // GALLERY — un souvenir par page, avec Précédent / Suivant
