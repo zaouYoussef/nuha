@@ -7,21 +7,14 @@
   status = 200
   force = true
 
+# Media proxied from Drive: cacheable 1 day
 [[headers]]
   for = "/api/media"
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
-# HTML must always revalidate, otherwise the page goes stale for weeks
+# Everything else (HTML): always revalidate so deploys go live immediately
 [[headers]]
-  for = "/*.html"
+  for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-[[headers]]
-  for = "/"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "no-cache"
