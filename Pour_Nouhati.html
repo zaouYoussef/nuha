@@ -503,6 +503,11 @@ section{position:relative;}
 .gpbtn{background:var(--glass);border:1px solid rgba(255,45,107,.3);color:#fff;width:46px;height:46px;border-radius:50%;font-size:18px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;}
 .gpbtn:hover:not(:disabled){background:rgba(255,45,107,.25);box-shadow:0 0 20px rgba(255,45,107,.3);transform:scale(1.08);}
 .gpbtn:disabled{opacity:.3;cursor:default;}
+.gplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(20,10,35,.5);border:2px solid rgba(255,255,255,.92);color:#fff;font-size:20px;padding-left:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(5px);transition:all .3s;z-index:3;box-shadow:0 8px 30px rgba(0,0,0,.4);}
+.gplay:hover{background:rgba(255,45,107,.8);transform:translate(-50%,-50%) scale(1.1);}
+.lbplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,45,107,.85);border:2px solid #fff;color:#fff;font-size:26px;padding-left:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;z-index:5;box-shadow:0 0 60px rgba(255,45,107,.6);}
+.lbplay:hover{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 90px rgba(255,45,107,.9);}
+.lbmsg{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);color:#fff;background:rgba(20,10,35,.8);border:1px solid rgba(255,45,107,.4);padding:10px 18px;border-radius:30px;font-size:14px;z-index:6;text-align:center;white-space:nowrap;}
 .gplabel{font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.5);min-width:90px;text-align:center;}
 
 /* ============ RESPONSIVE / MOBILE ============ */
@@ -636,7 +641,9 @@ section{position:relative;}
   <button class="lbx" onclick="lbClose()">&#10005;</button>
   <button class="lbn lbl" onclick="lbNav(-1)">&#10094;</button>
   <img id="lb-img" src="" alt="">
-  <video id="lb-vid" controls autoplay playsinline style="display:none;"></video>
+  <video id="lb-vid" controls playsinline style="display:none;"></video>
+  <button id="lb-play" class="lbplay" onclick="lbPlayVid()" aria-label="Lire la vidéo">&#9658;</button>
+  <div id="lb-msg" class="lbmsg" style="display:none;">Vidéo non lisible sur cet appareil (format HEVC)</div>
   <button class="lbn lbr" onclick="lbNav(1)">&#10095;</button>
   <div class="lbi">
     <div class="lbcap" id="lb-cap"></div>
@@ -1066,6 +1073,7 @@ var captions=[
   'Chaque jour avec toi','Le plus beau des souvenirs',"Rien qu'a toi",'Mon infini'
 ];
 function isVideo(src){return /\.(mov|mp4|webm|m4v)$/i.test(src);}
+function thumbUrl(name){if(!isVideo(name))return driveUrl(name);return 'media_thumbs/'+name.replace(/\.[^.]+$/i,'')+'.jpg';}
 
 var reasons=[
   {i:'&#128522;',t:'Ton sourire qui éclaire même les jours les plus sombres'},
@@ -1573,16 +1581,7 @@ function initSlideshow(){
   if(!cont) return;
   slideshowPhotos.forEach(function(src,i){
     var sl=document.createElement('div');sl.className='hslide'+(i===0?' active':'');
-    var m;
-    if(isVideo(src)){
-      m=document.createElement('video');m.muted=true;m.loop=true;m.playsInline=true;m.setAttribute('playsinline','');
-      if(i===0){m.preload='auto';m.autoplay=true;}
-      else{m.preload='metadata';}
-      m.src=driveUrl(src);
-      m.play().catch(function(){});
-    }else{
-      m=document.createElement('img');m.src=driveUrl(src);m.alt='';
-    }
+    var m=document.createElement('img');m.src=thumbUrl(src);m.alt='';
     m.onerror=function(){sl.remove();};
     sl.appendChild(m);cont.appendChild(sl);
     var d=document.createElement('div');d.className='sdot'+(i===0?' active':'');
@@ -1603,12 +1602,7 @@ function goSlide(n){
   if(n===si)return;
   var prev=sl[si],next=sl[n];
   prev.classList.remove('active');dt[si].classList.remove('active');
-  var pv=prev.querySelector('video');if(pv)pv.pause();
   si=n;next.classList.add('active');dt[si].classList.add('active');
-  var nv=next.querySelector('video');
-  if(nv){nv.preload='auto';nv.play().catch(function(){});}
-  var nn=sl[(n+1)%sl.length];var nnv=nn?nn.querySelector('video'):null;
-  if(nnv&&nnv.preload!=='auto'){nnv.preload='metadata';}
   runHeroProgress();
 }
 (function(){
@@ -1640,18 +1634,16 @@ function renderGalleryItem(idx){
   setTimeout(function(){
     media.innerHTML='';
     var src=allPhotos[idx];
+    var img=document.createElement('img');
+    img.src=thumbUrl(src);img.alt='';
+    img.onerror=function(){if(cap)cap.textContent='(fichier introuvable)';};
+    media.appendChild(img);
     if(isVideo(src)){
-      var v=document.createElement('video');
-      v.src=src;v.controls=true;v.autoplay=true;v.loop=true;v.playsInline=true;
-      v.onerror=function(){if(cap)cap.textContent='(fichier introuvable)';};
-      media.appendChild(v);
-      v.play().catch(function(){});
-    }else{
-      var img=document.createElement('img');
-      img.src=src;img.alt='';
-      img.onerror=function(){if(cap)cap.textContent='(fichier introuvable)';};
-      media.appendChild(img);
+      var badge=document.createElement('button');badge.className='gplay';badge.setAttribute('aria-label','Voir la vidéo');badge.innerHTML='&#9658;';
+      media.appendChild(badge);
     }
+    media.style.cursor='pointer';
+    media.onclick=function(){lbOpen(idx);};
     requestAnimationFrame(function(){media.style.opacity=1;});
     if(cap) cap.textContent=captions[idx%captions.length];
     buildGalleryPager(pager);
@@ -1679,17 +1671,23 @@ function lbClose(){
   document.getElementById('lb').classList.remove('open');document.body.style.overflow='';
 }
 function lbUpd(){
-  var img=document.getElementById('lb-img'),v=document.getElementById('lb-vid'),src=allPhotos[lbIdx];
-  if(isVideo(src)){
-    img.style.display='none';img.src='';
-    v.style.display='block';v.src=src;v.currentTime=0;v.muted=false;v.play().catch(function(){});
-  }else{
-    v.pause();v.style.display='none';v.removeAttribute('src');
-    img.style.display='block';img.style.opacity=0;
-    setTimeout(function(){img.src=src;img.style.transition='opacity .35s';img.style.opacity=1;},80);
-  }
+  var img=document.getElementById('lb-img'),v=document.getElementById('lb-vid'),pb=document.getElementById('lb-play'),msg=document.getElementById('lb-msg'),src=allPhotos[lbIdx];
+  if(v){v.pause();v.removeAttribute('src');v.style.display='none';}
+  if(msg)msg.style.display='none';
+  img.src=thumbUrl(src);img.style.display='block';img.style.opacity=1;
+  if(pb)pb.style.display=isVideo(src)?'flex':'none';
   document.getElementById('lb-cap').textContent=captions[lbIdx%captions.length];
   document.getElementById('lb-num').textContent=(lbIdx+1)+' / '+allPhotos.length;
+}
+function lbPlayVid(){
+  var img=document.getElementById('lb-img'),v=document.getElementById('lb-vid'),pb=document.getElementById('lb-play'),msg=document.getElementById('lb-msg'),src=allPhotos[lbIdx];
+  img.style.display='none';
+  if(pb)pb.style.display='none';
+  v.style.display='block';
+  v.src=driveUrl(src);
+  v.currentTime=0;v.muted=false;
+  v.onerror=function(){v.style.display='none';img.style.display='block';if(msg)msg.style.display='block';};
+  v.play().catch(function(){v.style.display='none';img.style.display='block';if(msg)msg.style.display='block';});
 }
 function lbNav(d){lbIdx=(lbIdx+d+allPhotos.length)%allPhotos.length;lbUpd();}
 document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)lbClose();});
