@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Nouhati &#8212; Notre Histoire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://drive.usercontent.google.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--rose:#ff2d6b;--rose2:#ff6b9d;--gold:#f0c040;--deep:#04040f;--glass:rgba(255,255,255,0.04);--violet:#9b5de5;--violet2:#c77dff;}
@@ -127,13 +130,13 @@ animation:gr .4s steps(2) infinite;}
 
 /* HERO */
 #hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
+.hslide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease;}
 .hslide.active{opacity:1;}
-.hslide img,.hslide video{width:100%;height:100%;object-fit:cover;animation:kb 9s ease-in-out forwards;}
+.hslide img,.hslide video{width:100%;height:100%;object-fit:cover;animation:kb 12s ease-in-out forwards;}
 .hslide video{background:#000;}
-@keyframes kb{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-2%,-1.5%)}}
-.hslide:nth-child(even) img,.hslide:nth-child(even) video{animation:kb2 9s ease-in-out forwards;}
-@keyframes kb2{0%{transform:scale(1.1) translate(-2%,0)}100%{transform:scale(1) translate(2%,-2%)}}
+@keyframes kb{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.22) translate(-2.5%,-2%)}}
+.hslide:nth-child(even) img,.hslide:nth-child(even) video{animation:kb2 12s ease-in-out forwards;}
+@keyframes kb2{0%{transform:scale(1.18) translate(-2%,0)}100%{transform:scale(1.04) translate(2.5%,-2.5%)}}
 .hov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,4,15,.25) 0%,rgba(4,4,15,.05) 40%,rgba(4,4,15,.55) 80%,rgba(4,4,15,.97) 100%);z-index:2;}
 .hvig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(4,4,15,.65) 100%);z-index:2;}
 .hcont{position:relative;z-index:5;text-align:center;padding:20px;}
@@ -564,6 +567,58 @@ section{position:relative;}
 /* CONFETTI COLORS */
 .ch{filter:drop-shadow(0 0 4px currentColor);}
 
+/* ================= WOW V2 ================= */
+/* AURORA AMBIENT (fond vivant, suit le scroll sur tout le site) */
+#aurora{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;opacity:.5;}
+#aurora i{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;will-change:transform;}
+#aurora i:nth-child(1){width:64vw;height:64vw;left:-16vw;top:-16vh;background:radial-gradient(circle,rgba(155,93,229,.6),transparent 65%);animation:aur1 26s ease-in-out infinite alternate;}
+#aurora i:nth-child(2){width:54vw;height:54vw;right:-20vw;top:6vh;background:radial-gradient(circle,rgba(255,45,107,.42),transparent 65%);animation:aur2 32s ease-in-out infinite alternate;}
+#aurora i:nth-child(3){width:72vw;height:72vw;left:8vw;bottom:-34vh;background:radial-gradient(circle,rgba(240,192,64,.3),transparent 65%);animation:aur3 40s ease-in-out infinite alternate;}
+@keyframes aur1{to{transform:translate(14vw,12vh) scale(1.28);}}
+@keyframes aur2{to{transform:translate(-12vw,-16vh) scale(1.22);}}
+@keyframes aur3{to{transform:translate(-10vw,-14vh) scale(1.32);}}
+#main{position:relative;z-index:3;}
+
+/* REVEAL CINÉMA : flou->net sur les blocs principaux */
+.chapter.rv,.stitle.rv,.slbl.rv,.sc.rv,.fuc.rv,.vcat.rv,.rc.rv,.polaroid.rv,.mfcard.rv,.dpc.rv,.chatwrap.rv,.lw.rv,.mapwrap.rv,.ti.rv,.bqflower.rv,.gh.rv,.fbig.rv{transition:opacity .95s cubic-bezier(.34,1.26,.64,1),transform .95s cubic-bezier(.34,1.26,.64,1),filter .95s ease;filter:blur(8px);}
+.chapter.rv.in,.stitle.rv.in,.slbl.rv.in,.sc.rv.in,.fuc.rv.in,.vcat.rv.in,.rc.rv.in,.polaroid.rv.in,.mfcard.rv.in,.dpc.rv.in,.chatwrap.rv.in,.lw.rv.in,.mapwrap.rv.in,.ti.rv.in,.bqflower.rv.in,.gh.rv.in,.fbig.rv.in{filter:blur(0);}
+
+/* TITRES : reflet lumineux qui balaye le texte */
+.stitle{background-size:200% 200%;animation:titleSh 9s linear infinite;}
+@keyframes titleSh{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.hname{filter:drop-shadow(0 0 34px rgba(255,120,180,.35));}
+.ftitle{background-size:220% 220%;animation:titleSh 11s linear infinite;}
+
+/* ÉTINCELLES HÉRO */
+.hsparks{position:absolute;inset:0;pointer-events:none;z-index:6;}
+.hspark{position:absolute;font-size:14px;opacity:0;animation:hsp 5s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,200,230,.8));}
+@keyframes hsp{0%{opacity:0;transform:translateY(12px) scale(.5) rotate(0deg)}25%{opacity:.95}55%{opacity:.45}100%{opacity:0;transform:translateY(-110px) scale(1.25) rotate(45deg)}}
+
+/* BARRE DE PROGRESSION DES SLIDES */
+.hprogress{position:absolute;bottom:0;left:0;right:0;height:3px;z-index:11;background:rgba(255,255,255,.1);}
+.hprogress span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--gold));box-shadow:0 0 12px var(--rose);}
+.hprogress span.run{animation:hprog 5.5s linear forwards;}
+@keyframes hprog{from{width:0%}to{width:100%}}
+
+/* RIPPLE TACTILE (mobile) */
+.ripple{position:fixed;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;pointer-events:none;transform:scale(0);background:radial-gradient(circle,rgba(255,255,255,.55),rgba(255,45,107,.3) 55%,transparent);animation:rip .55s ease-out forwards;z-index:99996;}
+@keyframes rip{to{transform:scale(1);opacity:0;}}
+
+/* PRESS FEEDBACK */
+.key:active,.mcbtn:active,.pbtn:active:not(:disabled),.gpbtn:active:not(:disabled),.wc-btn:active,.freplay:active,.fsbtn:active,.pndot:active{transform:scale(.92);}
+
+/* SHINE SUR LES CARTES (desktop) */
+@media(hover:hover){
+  .sc,.rc,.fuc,.vcat,.mfcard{overflow:hidden;}
+  .sc::after,.rc::after,.fuc::after,.vcat::after,.mfcard::after{content:'';position:absolute;top:0;left:-160%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent);transform:skewX(-20deg);transition:left .9s ease;pointer-events:none;z-index:2;}
+  .sc:hover::after,.rc:hover::after,.fuc:hover::after,.vcat:hover::after,.mfcard:hover::after{left:160%;}
+}
+
+/* PERF : ne rend pas les sections hors écran */
+#main>section:not(#hero){content-visibility:auto;contain-intrinsic-size:auto 150vh;}
+@media(hover:none){#grain{animation:none;opacity:.05;}#petals{opacity:.8;}}
+@media(max-width:640px){#aurora{opacity:.38;}}
+
 </style>
 </head>
 <body>
@@ -572,6 +627,7 @@ section{position:relative;}
 <div id="petals"></div>
 <div id="bgimg"></div>
 <div id="flowerbg"></div>
+<div id="aurora"><i></i><i></i><i></i></div>
 <div id="sstars"></div>
 <div id="fireflies"></div>
 
@@ -719,6 +775,16 @@ section{position:relative;}
     <div class="hline"></div>
   </div>
   <div class="sdots" id="sdots"></div>
+  <div class="hsparks">
+    <span class="hspark" style="left:12%;top:30%;animation-delay:.2s">&#10024;</span>
+    <span class="hspark" style="left:80%;top:22%;animation-delay:1.1s">&#10024;</span>
+    <span class="hspark" style="left:22%;top:72%;animation-delay:2s">&#10024;</span>
+    <span class="hspark" style="left:70%;top:66%;animation-delay:1.6s">&#10024;</span>
+    <span class="hspark" style="left:47%;top:16%;animation-delay:.7s">&#128153;</span>
+    <span class="hspark" style="left:91%;top:52%;animation-delay:2.6s">&#10024;</span>
+    <span class="hspark" style="left:36%;top:44%;animation-delay:3.1s">&#11088;</span>
+  </div>
+  <div class="hprogress"><span id="hprogFill"></span></div>
 </section>
 
 <section class="cs">
@@ -1055,7 +1121,9 @@ var flowerPngs=[
 // AMBIENT FALLING PETALS (real flower images, drifting continuously across the whole site)
 function spawnPetal(){
   var cont=document.getElementById('petals');
-  if(!cont || document.querySelectorAll('#petals .petal').length>26) return;
+  if(!cont) return;
+  var maxPetals=window.innerWidth<640?14:26;
+  if(document.querySelectorAll('#petals .petal').length>maxPetals) return;
   var p=document.createElement('div');p.className='petal';
   var img=document.createElement('img');
   img.src=flowerPngs[Math.floor(Math.random()*flowerPngs.length)];
@@ -1079,10 +1147,11 @@ function buildFlowerWallpaper(){
   var bg=document.getElementById('flowerbg');
   if(!bg || bg.dataset.built) return;
   bg.dataset.built='1';
-  var n=200;
+  var n=window.innerWidth<640?60:120;
   for(var i=0;i<n;i++){
     var img=document.createElement('img');
     img.src=flowerPngs[i%flowerPngs.length];
+    img.loading='lazy';img.decoding='async';
     img.onerror=function(){this.remove();};
     var sz=(30+Math.random()*100);
     img.style.width=sz+'px';
@@ -1101,10 +1170,11 @@ function buildFlowerField(){
   var field=document.getElementById('flField');
   if(!field || field.dataset.built) return;
   field.dataset.built='1';
-  var n=90;
+  var n=window.innerWidth<640?42:90;
   for(var i=0;i<n;i++){
     var img=document.createElement('img');img.className='fl-field-img';
     img.src=flowerPngs[i%flowerPngs.length];
+    img.loading='lazy';img.decoding='async';
     img.onerror=function(){this.remove();};
     var sz=(40+Math.random()*150);
     img.style.width=sz+'px';
@@ -1468,13 +1538,14 @@ function unlock(){
 
 // ENVELOPE
 function envOpen(){
+  var mainEl=document.getElementById('main');
+  if(mainEl&&mainEl.style.display==='block')return;
   var flap=document.getElementById('eflap');
   if(flap) flap.classList.add('open');
   for(var i=0;i<40;i++){(function(d){setTimeout(spawnC,d);})(i*40);}
   setTimeout(function(){
     var envEl=document.getElementById('env');
     envEl.classList.add('out');
-    var mainEl=document.getElementById('main');
     mainEl.style.display='block';
     window.scrollTo(0,0);
     requestAnimationFrame(function(){mainEl.classList.add('show');});
@@ -1496,6 +1567,7 @@ function envOpen(){
 
 // HERO SLIDESHOW
 var si=0;
+var HERO_MS=5500;
 function initSlideshow(){
   var cont=document.getElementById('hslides'),dots=document.getElementById('sdots');
   if(!cont) return;
@@ -1517,18 +1589,39 @@ function initSlideshow(){
     d.onclick=(function(n){return function(){goSlide(n);};})(i);
     dots.appendChild(d);
   });
-  setInterval(function(){goSlide((si+1)%slideshowPhotos.length);},5500);
+  runHeroProgress();
+  setInterval(function(){goSlide((si+1)%slideshowPhotos.length);},HERO_MS);
+}
+function runHeroProgress(){
+  var f=document.getElementById('hprogFill');
+  if(!f) return;
+  f.classList.remove('run');void f.offsetWidth;f.classList.add('run');
 }
 function goSlide(n){
   var sl=document.querySelectorAll('.hslide'),dt=document.querySelectorAll('.sdot');
   if(!sl[n])return;
+  if(n===si)return;
   var prev=sl[si],next=sl[n];
   prev.classList.remove('active');dt[si].classList.remove('active');
   var pv=prev.querySelector('video');if(pv)pv.pause();
   si=n;next.classList.add('active');dt[si].classList.add('active');
   var nv=next.querySelector('video');
   if(nv){nv.preload='auto';nv.play().catch(function(){});}
+  var nn=sl[(n+1)%sl.length];var nnv=nn?nn.querySelector('video'):null;
+  if(nnv&&nnv.preload!=='auto'){nnv.preload='metadata';}
+  runHeroProgress();
 }
+(function(){
+  var hero=document.getElementById('hero');if(!hero)return;
+  var x0=null;
+  hero.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  hero.addEventListener('touchend',function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>45){goSlide((si+(dx<0?1:-1)+slideshowPhotos.length)%slideshowPhotos.length);}
+    x0=null;
+  },{passive:true});
+})();
 
 // GALLERY — un souvenir par page, avec Précédent / Suivant
 var galleryIndex=0;
@@ -2112,10 +2205,49 @@ spawnC=function(){
   document.body.appendChild(h);setTimeout(function(){h.remove();},6000);
 };
 
+// ================= RIPPLE TACTILE (mobile) =================
+document.addEventListener('pointerdown',function(e){
+  if(e.pointerType==='mouse')return;
+  var t=e.target;
+  if(!t||!t.closest)return;
+  if(!t.closest('button,.sc,.rc,.fuc,.vcat,.mfcard,.polaroid,.jar,.bqflower,.gpbtn,.pbtn,.wc-btn,.key,.fsbtn,.freplay,.pndot'))return;
+  var r=document.createElement('div');r.className='ripple';
+  r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+  document.body.appendChild(r);
+  setTimeout(function(){r.remove();},600);
+});
+
+// ================= PAUSE VIDÉOS HORS ÉCRAN (perf mobile) =================
+function initVideoPause(){
+  if(!('IntersectionObserver' in window))return;
+  var obs=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      var v=e.target;
+      if(e.isIntersecting){
+        if(v.dataset.wp==='1'){v.dataset.wp='';v.play().catch(function(){});}
+      }else{
+        if(!v.paused&&!v.ended){v.dataset.wp='1';v.pause();}
+      }
+    });
+  },{threshold:.05});
+  function scan(){document.querySelectorAll('video').forEach(function(v){if(!v.dataset.op){obs.observe(v);v.dataset.op='1';}});}
+  scan();setInterval(scan,2000);
+  var t=null;window.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(scan,500);},{passive:true});
+}
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){
+    document.querySelectorAll('video').forEach(function(v){if(!v.paused){v.dataset.wp='1';v.pause();}});
+  }else{
+    var h=document.querySelector('.hslide.active video');
+    if(h&&h.dataset.wp){h.dataset.wp='';h.play().catch(function(){});}
+  }
+});
+
 // INIT
 function initMain(){
   initSlideshow();initGallery();initTimeline();initReasons();initLetter();initReveal();initCounters();
   initChat();initBouquet();initMusic();initVideos();initMemoryFlip();initScratch();initMap();initJar();initStars2();initLiveCounter();initPageNav();
+  initVideoPause();
 }
 </script>
 </body>
