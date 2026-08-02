@@ -1,6 +1,17 @@
 [build]
   publish = "."
 
+[[redirects]]
+  from = "/api/media"
+  to = "/.netlify/functions/media"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/api/media"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
 [[headers]]
   for = "/*"
   [headers.values]
