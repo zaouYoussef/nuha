@@ -510,6 +510,34 @@ section{position:relative;}
 .lbmsg{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);color:#fff;background:rgba(20,10,35,.8);border:1px solid rgba(255,45,107,.4);padding:10px 18px;border-radius:30px;font-size:14px;z-index:6;text-align:center;white-space:nowrap;}
 .gplabel{font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.5);min-width:90px;text-align:center;}
 
+/* GALLERY STORY MODE (mobile) — piloté par JS, invisible sur desktop */
+.gstory-progress{display:none;}
+.gtap{display:none;}
+.gswipehint{display:none;}
+#gstoryEnd{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:radial-gradient(ellipse at center,#1a0630 0%,#0c0018 60%,var(--deep) 100%);opacity:0;pointer-events:none;transition:opacity .6s ease;text-align:center;padding:0 30px;}
+#gstoryEnd.show{opacity:1;pointer-events:auto;}
+.gse-icon{font-size:54px;animation:ipu 1.8s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(255,45,107,.8));}
+.gse-txt{font-family:'Dancing Script',cursive;font-size:clamp(22px,5.5vw,32px);color:#fff;line-height:1.5;}
+.gse-sub{font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.4);text-transform:uppercase;}
+
+@media(max-width:900px){
+  .gsingle{max-width:420px;border-radius:26px;box-shadow:0 20px 60px rgba(155,93,229,.28);position:relative;}
+  .gsingle-media{aspect-ratio:9/16;}
+  .gsingle-cap{padding:0 16px;}
+  .gstory-progress{display:flex;position:absolute;top:12px;left:12px;right:12px;height:3px;gap:5px;z-index:6;}
+  .gstory-progress .seg{flex:1;height:100%;border-radius:3px;background:rgba(255,255,255,.28);overflow:hidden;}
+  .gstory-progress .seg i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:3px;transition:width .25s ease;}
+  .gtap{display:block;position:absolute;top:0;bottom:0;width:38%;z-index:5;cursor:pointer;}
+  .gtap-l{left:0;}
+  .gtap-r{right:0;}
+  .gswipehint{display:flex;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:6;align-items:center;gap:8px;padding:8px 16px;border-radius:30px;background:rgba(10,5,20,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.8);text-transform:uppercase;opacity:0;animation:gswipe-in .6s ease .8s forwards,gswipe-out .6s ease 4.2s forwards;white-space:nowrap;}
+  .gswipehint span{display:inline-block;animation:gswipe-move 1.4s ease-in-out infinite;}
+  @keyframes gswipe-in{to{opacity:1;}}
+  @keyframes gswipe-out{to{opacity:0;visibility:hidden;}}
+  @keyframes gswipe-move{0%,100%{transform:translateX(0);}50%{transform:translateX(-6px);}}
+  .gpager{margin-top:20px;}
+}
+
 /* ============ RESPONSIVE / MOBILE ============ */
 @media(max-width:900px){
   section:not(#hero){padding-left:6vw;padding-right:6vw;}
@@ -794,7 +822,7 @@ section{position:relative;}
   <div class="hprogress"><span id="hprogFill"></span></div>
 </section>
 
-<section class="cs">
+<section class="cs" id="messagesSection">
   <div class="inn">
     <div class="chapter rv"><span class="chnum">PROLOGUE</span></div>
     <div class="rv" style="text-align:center;">
@@ -874,7 +902,11 @@ section{position:relative;}
       <p>Chaque photo, chaque vid&eacute;o ici est un tr&eacute;sor. Chaque regard est une preuve d&apos;amour. Clique pour agrandir &mdash; et monte le son pour les vid&eacute;os. &#128150;</p>
     </div>
     <div class="gsingle" id="gsingle">
+      <div class="gstory-progress" id="gstoryProgress"></div>
       <div class="gsingle-media" id="gsingleMedia"></div>
+      <div class="gtap gtap-l" id="gtapL" role="button" aria-label="Photo précédente"></div>
+      <div class="gtap gtap-r" id="gtapR" role="button" aria-label="Photo suivante"></div>
+      <div class="gswipehint" id="gswipehint"><span>&#128070;</span> Glisse pour continuer</div>
     </div>
     <div class="gsingle-cap" id="gsingleCap"></div>
     <div class="gpager" id="gpager"></div>
@@ -1054,6 +1086,12 @@ section{position:relative;}
 </section>
 
 </main>
+
+<div id="gstoryEnd">
+  <div class="gse-icon">&#128140;</div>
+  <div class="gse-txt">Nos souvenirs continuent<br>dans nos messages&#8230;</div>
+  <div class="gse-sub">Retour au début de notre histoire</div>
+</div>
 
 <script>
 // TES VIDEOS .MOV sont utilisées directement depuis le dossier racine
@@ -1618,12 +1656,38 @@ function goSlide(n){
   },{passive:true});
 })();
 
-// GALLERY — un souvenir par page, avec Précédent / Suivant
+// GALLERY — un souvenir par page, mode "story" plein écran sur mobile
+// Sur mobile : on parcourt les photos une par une (swipe / tap), et à la
+// toute dernière photo, on est amené automatiquement vers les messages.
 var galleryIndex=0;
+var gstoryBuilt=false;
 function initGallery(){
   var g=document.getElementById('gsingleMedia');
   if(!g) return;
+  buildGalleryProgress();
   renderGalleryItem(0);
+  initGalleryTouch();
+}
+function buildGalleryProgress(){
+  var prog=document.getElementById('gstoryProgress');
+  if(!prog||!allPhotos.length||gstoryBuilt) return;
+  gstoryBuilt=true;
+  var frag=document.createDocumentFragment();
+  for(var i=0;i<allPhotos.length;i++){
+    var seg=document.createElement('div');seg.className='seg';
+    var fill=document.createElement('i');
+    seg.appendChild(fill);
+    frag.appendChild(seg);
+  }
+  prog.appendChild(frag);
+}
+function updateGalleryProgress(idx){
+  var prog=document.getElementById('gstoryProgress');
+  if(!prog) return;
+  var segs=prog.querySelectorAll('.seg i');
+  segs.forEach(function(fill,i){
+    fill.style.width=(i<=idx)?'100%':'0%';
+  });
 }
 function renderGalleryItem(idx){
   var media=document.getElementById('gsingleMedia'),cap=document.getElementById('gsingleCap'),pager=document.getElementById('gpager');
@@ -1648,6 +1712,7 @@ function renderGalleryItem(idx){
     requestAnimationFrame(function(){media.style.opacity=1;});
     if(cap) cap.textContent=captions[idx%captions.length];
     buildGalleryPager(pager);
+    updateGalleryProgress(idx);
   },200);
 }
 function buildGalleryPager(pager){
@@ -1660,8 +1725,61 @@ function buildGalleryPager(pager){
   label.textContent=(galleryIndex+1)+' / '+allPhotos.length;
   var next=document.createElement('button');next.className='gpbtn';next.innerHTML='&#10095;';
   next.setAttribute('aria-label','Souvenir suivant');
-  next.addEventListener('click',function(){renderGalleryItem(galleryIndex+1);});
+  next.addEventListener('click',function(){galleryGoNext();});
   pager.appendChild(prev);pager.appendChild(label);pager.appendChild(next);
+}
+// Avance d'une photo, ou déclenche la transition vers les messages si on est
+// déjà sur la dernière photo de la galerie.
+function galleryGoNext(){
+  if(galleryIndex>=allPhotos.length-1){
+    finishGalleryStory();
+  }else{
+    renderGalleryItem(galleryIndex+1);
+  }
+}
+function galleryGoPrev(){
+  renderGalleryItem(galleryIndex-1);
+}
+// Transition de fin de galerie -> section messages
+var gstoryEnding=false;
+function finishGalleryStory(){
+  if(gstoryEnding) return;
+  gstoryEnding=true;
+  var end=document.getElementById('gstoryEnd');
+  var target=document.getElementById('messagesSection');
+  if(!end||!target){gstoryEnding=false;return;}
+  end.classList.add('show');
+  setTimeout(function(){
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(function(){
+      end.classList.remove('show');
+      gstoryEnding=false;
+    },900);
+  },1500);
+}
+// Swipe tactile + tap zones (mode story mobile)
+function initGalleryTouch(){
+  var stage=document.getElementById('gsingle');
+  if(!stage||stage.dataset.touchInit) return;
+  stage.dataset.touchInit='1';
+  var x0=null,y0=null;
+  stage.addEventListener('touchstart',function(e){
+    x0=e.touches[0].clientX;y0=e.touches[0].clientY;
+    var hint=document.getElementById('gswipehint');
+    if(hint) hint.style.animation='none';
+  },{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0;
+    var dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){
+      if(dx<0){galleryGoNext();}else{galleryGoPrev();}
+    }
+    x0=null;y0=null;
+  },{passive:true});
+  var tl=document.getElementById('gtapL'),tr=document.getElementById('gtapR');
+  if(tl) tl.addEventListener('click',function(e){e.stopPropagation();galleryGoPrev();});
+  if(tr) tr.addEventListener('click',function(e){e.stopPropagation();galleryGoNext();});
 }
 
 // LIGHTBOX
