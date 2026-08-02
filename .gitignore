@@ -1,8 +1,7 @@
-# Ignore heavy raw MOV and HEIC files for fast Vercel deployment
+# Ignore heavy raw MOV files for fast deployment (photos HEIC are committed)
 *.MOV
 *.mov
-*.HEIC
-*.heic
+*.HEIC.tmp
 
 # Ignore Python scripts and temp files
 *.py
