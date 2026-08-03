@@ -720,6 +720,17 @@ section{position:relative;}
 .wheart{position:absolute;bottom:-50px;font-size:20px;opacity:0;pointer-events:none;z-index:1;animation:rise linear infinite;}
 @keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0;}12%{opacity:.55;}85%{opacity:.35;}100%{transform:translateY(-115vh) rotate(30deg);opacity:0;}}
 
+
+/* INTRO VIDEO ROMANTIQUE */
+.i-video{opacity:0;transform:scale(.92);transition:opacity 1s ease,transform 1s ease;margin-top:26px;width:100%;display:flex;flex-direction:column;align-items:center;}
+.i-video.show{opacity:1;transform:scale(1);}
+.i-vframe{position:relative;width:min(80vw,430px);border-radius:24px;padding:8px;background:linear-gradient(140deg,rgba(240,192,64,.4),rgba(255,45,107,.5),rgba(240,192,64,.25));animation:vgold 3.5s ease-in-out infinite;}
+@keyframes vgold{0%,100%{box-shadow:0 0 55px rgba(255,45,107,.45),0 22px 60px rgba(0,0,0,.55);}50%{box-shadow:0 0 95px rgba(240,192,64,.6),0 22px 70px rgba(0,0,0,.55);}}
+.i-vframe video{display:block;width:100%;height:auto;max-height:50vh;object-fit:contain;border-radius:17px;background:#000;}
+.i-vframe::before{content:'';position:absolute;inset:0;border-radius:24px;box-shadow:inset 0 0 38px rgba(0,0,0,.4);pointer-events:none;z-index:2;}
+.i-vcap{font-family:'Dancing Script',cursive;font-size:clamp(19px,3vw,26px);color:rgba(255,225,238,.95);margin-top:16px;text-shadow:0 0 20px rgba(255,45,107,.7);letter-spacing:.5px;}
+@media(max-height:700px){.i-vframe video{max-height:42vh;}.i-video{margin-top:14px;}.i-hb{margin-bottom:14px;}}
+
 </style>
 </head>
 <body>
@@ -790,6 +801,12 @@ section{position:relative;}
   <div class="i-stars" id="iStars"></div>
   <span class="i-hb">&#128150;</span>
   <p class="i-txt" id="iTxt"></p>
+  <div class="i-video" id="iVideoWrap">
+    <div class="i-vframe">
+      <video id="iVideo" src="open.mp4" muted loop playsinline preload="auto"></video>
+    </div>
+    <p class="i-vcap">Un moment pour toi, rien que toi &#128149;</p>
+  </div>
   <p class="i-tap" id="iTap">Touche l&apos;écran pour continuer</p>
 </div>
 
@@ -1640,7 +1657,7 @@ function runChat(){
   if(!txtEl) return;
   var li=0;
   function typeLine(){
-    if(li>=lines.length){tapEl && tapEl.classList.add('show');return;}
+    if(li>=lines.length){var vw=document.getElementById('iVideoWrap');var vi=document.getElementById('iVideo');if(vw)vw.classList.add('show');if(vi){try{vi.currentTime=0;vi.muted=true;var p=vi.play();if(p&&p.then)p.then(function(){},{ });}catch(e){}}videoReady=true;tapEl && tapEl.classList.add('show');return;}
     var line=lines[li],ci=0;
     txtEl.innerHTML='';
     var cur=document.createElement('span');cur.className='i-cur';
@@ -1675,8 +1692,11 @@ function runChat(){
   }
 
   var dismissed=false;
+  var videoReady=false;
   document.getElementById('intro').addEventListener('click',function(){
-    if(dismissed) return; dismissed=true;
+    if(dismissed) return;
+    if(!videoReady) return;
+    dismissed=true;
     playHeartbeat();
     var introEl=document.getElementById('intro');
     introEl.classList.add('out');
