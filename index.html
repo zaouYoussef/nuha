@@ -1311,7 +1311,11 @@ function spawnBloomPetal(){
 }
 function playFlowerBloom(){
   var fl=document.getElementById('flower');
-  if(!fl) return;
+  if(!fl){
+    var envEl=document.getElementById('env');
+    if(envEl) requestAnimationFrame(function(){envEl.classList.add('show');});
+    return;
+  }
   buildFlowerField();
   fl.classList.add('show');
   var fallTimer=setInterval(spawnBloomPetal,140);
