@@ -1741,29 +1741,6 @@ function goSlide(n){
 // toute dernière photo, on est amené automatiquement vers les messages.
 var galleryIndex=0;
 var gstoryBuilt=false;
-var galleryFullyViewed=false;
-// Empêche de scroller au-delà de la galerie tant que les 101 photos n'ont pas
-// toutes été vues (jusqu'à 101/101).
-function galleryLockY(){
-  var gs=document.querySelector('.gs');
-  if(!gs) return Infinity;
-  return gs.getBoundingClientRect().top+window.scrollY;
-}
-function enforceGalleryLock(){
-  if(galleryFullyViewed) return;
-  var limit=galleryLockY();
-  if(window.scrollY>limit+2){
-    window.scrollTo(0,limit);
-  }
-}
-function initGalleryLock(){
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(ticking) return;
-    ticking=true;
-    requestAnimationFrame(function(){enforceGalleryLock();ticking=false;});
-  },{passive:true});
-}
 var GALLERY_MS=4500,galleryTimer=null,galleryDone=false;
 function galleryStop(){if(galleryTimer){clearInterval(galleryTimer);galleryTimer=null;}}
 function galleryAuto(){
@@ -1818,7 +1795,6 @@ function renderGalleryItem(idx){
   idx=((idx%allPhotos.length)+allPhotos.length)%allPhotos.length;
   galleryIndex=idx;
   galleryDone=false;
-  if(idx>=allPhotos.length-1){galleryFullyViewed=true;}
   media.style.transition='opacity .3s ease';
   media.style.opacity=0;
   setTimeout(function(){
@@ -2094,15 +2070,15 @@ var chatMessages = [
   },
 
   {
-    who: 'me',
+    who: 'her',
     t: "1 chose qui me rend unique"
   },
   {
-    who: 'her',
+    who: 'me',
     t: "Le fait anak Nouha vrm te rend unique pr moi, merci d'exister mon amour ❤️"
   },
   {
-    who: 'me',
+    who: 'her',
     t: "🥹🥹🥹🥹🥹"
   }
 ];
@@ -2373,7 +2349,6 @@ function initPageNav(){
   if(!nav||!main) return;
   var sections=Array.prototype.slice.call(main.querySelectorAll(':scope > section'));
   if(!sections.length) return;
-  var gsIndex=sections.indexOf(document.querySelector('.gs'));
   var current=0;
   var countEl=document.getElementById('pagecount');
   var prevBtn=document.getElementById('pgPrev');
@@ -2382,10 +2357,7 @@ function initPageNav(){
     var dot=document.createElement('button');
     dot.className='pndot'+(i===0?' active':'');
     dot.setAttribute('aria-label','Aller à la page '+(i+1));
-    dot.addEventListener('click',function(){
-      if(gsIndex!==-1&&!galleryFullyViewed&&i>gsIndex){sections[gsIndex].scrollIntoView({behavior:'smooth',block:'start'});return;}
-      sec.scrollIntoView({behavior:'smooth',block:'start'});
-    });
+    dot.addEventListener('click',function(){sec.scrollIntoView({behavior:'smooth',block:'start'});});
     nav.appendChild(dot);
   });
   var dots=nav.querySelectorAll('.pndot');
@@ -2412,7 +2384,6 @@ function initPageNav(){
   });
   if(nextBtn) nextBtn.addEventListener('click',function(){
     var target=Math.min(sections.length-1,current+1);
-    if(gsIndex!==-1&&!galleryFullyViewed&&target>gsIndex){target=gsIndex;}
     sections[target].scrollIntoView({behavior:'smooth',block:'start'});
   });
   document.addEventListener('keydown',function(e){
@@ -2575,7 +2546,7 @@ function initMain(){
 })();
 
 initSlideshow();initGallery();initTimeline();initReasons();initLetter();initReveal();initCounters();
-  initChat();initBouquet();initMusic();initVideos();initMemoryFlip();initScratch();initMap();initJar();initStars2();initLiveCounter();initPageNav();initGalleryLock();
+  initChat();initBouquet();initMusic();initVideos();initMemoryFlip();initScratch();initMap();initJar();initStars2();initLiveCounter();initPageNav();
   initVideoPause();
 }
 </script>
