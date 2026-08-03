@@ -758,6 +758,23 @@ section{position:relative;}
 .dcsign{font-family:'Dancing Script',cursive;font-size:clamp(24px,3.4vw,32px);color:#ffd98a;text-align:center;margin-top:34px;text-shadow:0 0 26px rgba(240,192,64,.7);letter-spacing:1px;}
 @media(max-width:560px){.dcard{padding:44px 24px;}.dcard p{text-align:left;}}
 
+
+/* ===== NOTRE VIDÉO (muette) ===== */
+.vshow{padding:130px 5vw;text-align:center;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(240,192,64,.1),rgba(10,0,25,0) 60%),linear-gradient(180deg,var(--deep),#0c0018,var(--deep));position:relative;overflow:hidden;}
+.vshow .inn{max-width:720px;margin:0 auto;position:relative;z-index:3;}
+.vshowbox{display:flex;flex-direction:column;align-items:center;margin-top:56px;}
+.vshow-frame{position:relative;width:min(80vw,480px);border-radius:28px;padding:10px;background:linear-gradient(140deg,rgba(240,192,64,.5),rgba(255,45,107,.6),rgba(240,192,64,.35));animation:vshowglow 3s ease-in-out infinite;cursor:pointer;}
+@keyframes vshowglow{0%,100%{box-shadow:0 0 70px rgba(255,45,107,.5),0 30px 70px rgba(0,0,0,.55);}50%{box-shadow:0 0 110px rgba(240,192,64,.7),0 30px 80px rgba(0,0,0,.55);}}
+.vshow-frame::before{content:'';position:absolute;inset:0;border-radius:28px;box-shadow:inset 0 0 50px rgba(0,0,0,.4);pointer-events:none;z-index:2;}
+.vshow-frame video{display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:19px;background:#000;}
+.vshow-frame::after{content:'';position:absolute;left:10px;right:10px;top:10px;bottom:10px;border-radius:19px;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,0) 35%,rgba(255,255,255,0) 60%,rgba(255,255,255,.06));z-index:3;}
+.vshow-replay{position:absolute;bottom:22px;right:22px;z-index:4;width:46px;height:46px;border-radius:50%;background:rgba(10,0,25,.55);border:1px solid rgba(240,192,64,.5);color:#ffd98a;font-size:18px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s ease;pointer-events:none;backdrop-filter:blur(4px);}
+.vshow-frame:hover .vshow-replay{opacity:1;}
+.vshow-note{font-family:'Dancing Script',cursive;font-size:clamp(19px,3vw,24px);color:rgba(255,230,242,.9);margin-top:22px;text-shadow:0 0 18px rgba(255,45,107,.6);letter-spacing:.5px;}
+.vshow-hint{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:14px;}
+.vsheart{position:absolute;bottom:-50px;font-size:18px;opacity:0;pointer-events:none;z-index:1;animation:rise linear infinite;}
+@media(max-width:560px){.vshow-frame video{max-height:52vh;}.vshow-replay{opacity:1;}}
+
 </style>
 </head>
 <body>
@@ -1017,6 +1034,31 @@ section{position:relative;}
   </div>
 </section>
 
+<!-- NOTRE VIDÉO -->
+<section class="vshow" id="vshow">
+  <div class="vsheart" style="left:12%;animation-duration:9s;">&#128151;</div>
+  <div class="vsheart" style="left:35%;animation-duration:12s;animation-delay:2s;">&#10024;</div>
+  <div class="vsheart" style="left:60%;animation-duration:10s;animation-delay:1s;">&#128149;</div>
+  <div class="vsheart" style="left:82%;animation-duration:11s;animation-delay:3s;">&#128158;</div>
+  <div class="inn">
+    <div class="rv" style="text-align:center;">
+      <span class="chnum">&#127909; UNE VID&Eacute;O DE NOUS</span>
+      <h2 class="stitle">Rien que toi</h2>
+      <p class="scratch-title">un instant vol&eacute;, rien que pour toi</p>
+    </div>
+    <div class="vshowbox rv">
+      <div class="vshow-frame" id="vshowFrame">
+        <video id="vshowVideo" src="video/WhatsApp Video 2026-08-03 at 13.57.41.mp4" muted loop playsinline preload="auto"></video>
+        <div class="vshow-replay">&#8635;</div>
+      </div>
+      <p class="vshow-note">la musique continue &hellip; &#127925; &#128149;</p>
+      <p class="vshow-hint">clique sur la vid&eacute;o pour la revoir</p>
+    </div>
+  </div>
+</section>
+
+
+
 <!-- POLAROID SCRATCH CARDS -->
 <section class="scratch" id="scratch">
   <div class="inn">
@@ -1197,13 +1239,7 @@ section{position:relative;}
         </div>
         <div class="cincap">Toi, juste toi</div>
       </div>
-      <div class="cincard rv d1">
-        <div class="cinmedia">
-          <video src="video/WhatsApp Video 2026-08-03 at 13.57.41.mp4" preload="metadata" playsinline></video>
-          <div class="cinplay" onclick="cinPlay(this)"><span>&#9654;</span></div>
-        </div>
-        <div class="cincap">Zyunat dyli</div>
-      </div>
+            </div>
       <div class="cincard rv d2">
         <div class="cinmedia">
           <video src="video/WhatsApp Video 2026-08-03 at 13.57.55.mp4" preload="metadata" playsinline></video>
@@ -2794,6 +2830,15 @@ function cinPlay(ov){
       if(ov){ov.style.opacity='1';ov.style.pointerEvents='auto';}
     });
   }
+})();
+
+
+// VIDEO SHOWCASE (muette)
+(function(){
+  var v=document.getElementById('vshowVideo');
+  var f=document.getElementById('vshowFrame');
+  if(v){ v.muted=true; try{var p=v.play(); if(p&&p.then)p.then(function(){},function(){});}catch(e){} }
+  if(f&&v){ f.addEventListener('click',function(){ try{v.currentTime=0;v.muted=true;v.play();}catch(e){} }); }
 })();
 
 </script>
