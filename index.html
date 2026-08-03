@@ -1607,12 +1607,28 @@ function goSlide(n){
 // toute dernière photo, on est amené automatiquement vers les messages.
 var galleryIndex=0;
 var gstoryBuilt=false;
+var GALLERY_MS=4500,galleryTimer=null;
+function galleryStop(){if(galleryTimer){clearInterval(galleryTimer);galleryTimer=null;}}
+function galleryAuto(){
+  galleryStop();
+  galleryTimer=setInterval(function(){
+    if(document.hidden) return;
+    if(galleryIndex>=allPhotos.length-1){galleryStop();finishGalleryStory();}
+    else{renderGalleryItem(galleryIndex+1);}
+  },GALLERY_MS);
+}
 function initGallery(){
   var g=document.getElementById('gsingleMedia');
   if(!g) return;
   buildGalleryProgress();
   renderGalleryItem(0);
   initGalleryTouch();
+  galleryAuto();
+  var gsec=document.getElementById('gsingle');
+  if(gsec && 'IntersectionObserver' in window){
+    var go=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){galleryAuto();}else{galleryStop();}});});
+    go.observe(gsec);
+  }
 }
 function buildGalleryProgress(){
   var prog=document.getElementById('gstoryProgress');
@@ -1632,7 +1648,10 @@ function updateGalleryProgress(idx){
   if(!prog) return;
   var segs=prog.querySelectorAll('.seg i');
   segs.forEach(function(fill,i){
-    fill.style.width=(i<=idx)?'100%':'0%';
+    fill.style.transition='none';
+    if(i<idx){fill.style.width='100%';}
+    else if(i===idx){fill.style.width='0%';requestAnimationFrame(function(){fill.style.transition='width '+GALLERY_MS+'ms linear';fill.style.width='100%';});}
+    else{fill.style.width='0%';}
   });
 }
 function renderGalleryItem(idx){
@@ -1659,6 +1678,7 @@ function renderGalleryItem(idx){
     if(cap) cap.textContent=captions[idx%captions.length];
     buildGalleryPager(pager);
     updateGalleryProgress(idx);
+    galleryAuto();
   },200);
 }
 function buildGalleryPager(pager){
@@ -1711,6 +1731,7 @@ function initGalleryTouch(){
   var x0=null,y0=null;
   stage.addEventListener('touchstart',function(e){
     x0=e.touches[0].clientX;y0=e.touches[0].clientY;
+    galleryStop();
     var hint=document.getElementById('gswipehint');
     if(hint) hint.style.animation='none';
   },{passive:true});
@@ -1722,6 +1743,7 @@ function initGalleryTouch(){
       if(dx<0){galleryGoNext();}else{galleryGoPrev();}
     }
     x0=null;y0=null;
+    galleryAuto();
   },{passive:true});
   var tl=document.getElementById('gtapL'),tr=document.getElementById('gtapR');
   if(tl) tl.addEventListener('click',function(e){e.stopPropagation();galleryGoPrev();});
