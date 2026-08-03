@@ -734,8 +734,8 @@ section{position:relative;}
   </div>
   <div class="lc">
     <div class="lico">&#128150;</div>
-    <h1 class="lname">Nouhati</h1>
-    <p class="lsub">Entre le code de notre amour (111101)</p>
+    <h1 class="lname">Nouhatiii</h1>
+    <p class="lsub">Le jour où mon plus beau cadeau est arrivé au monde 🎁💗</p>
     <div class="pdots">
       <div class="dot" id="d0"></div><div class="dot" id="d1"></div>
       <div class="dot" id="d2"></div><div class="dot" id="d3"></div>
@@ -755,27 +755,10 @@ section{position:relative;}
       <button class="key" onclick="kp('0')">0</button>
       <button class="key del" onclick="kpDel()">&#9003;</button>
     </div>
-    <p class="unlock-hint">Ou tape 111101 sur ton clavier</p>
   </div>
 </div>
 
-<!-- FLOWER BLOOM -->
-<div id="flower">
-  <div class="fl-rays"></div>
-  <div class="fl-field" id="flField"></div>
-  <div class="fl-stage">
-    <div class="fl-glow"></div>
-    <img class="fl-img fl-side s1" src="https://www.freeiconspng.com/uploads/purple-flower-png-31.png" alt="" onerror="this.style.display='none'">
-    <img class="fl-img fl-side s2" src="https://www.freeiconspng.com/uploads/purple-flower-png-11.png" alt="" onerror="this.style.display='none'">
-    <img class="fl-img fl-side s3" src="https://www.freeiconspng.com/uploads/purple-flower-png-7.png" alt="" onerror="this.style.display='none'">
-    <img class="fl-img fl-side s4" src="https://www.freeiconspng.com/uploads/purple-flower-png-11.png" alt="" onerror="this.style.display='none'">
-    <img class="fl-img fl-main" src="https://www.freeiconspng.com/uploads/purple-flower-png-9.png" alt="" onerror="this.style.display='none'">
-  </div>
-  <div class="fl-caption">
-    <p class="ftop">Notre amour s&apos;&eacute;panouit</p>
-    <p class="fname">Pour toi, Nouhati</p>
-  </div>
-</div>
+
 
 <!-- ENVELOPE -->
 <div id="env">
@@ -1433,7 +1416,7 @@ function initStarsHeart(){
 function runChat(){
   var wrap=document.getElementById('chWrap');
   if(!wrap) return;
-  var msgs=['Sbah Nour kbida dyli',' Kif ?',"Tu me manques...",'Je peux te montrer quelque chose ?','Clique en dessous \u2764\ufe0f'];
+  var msgs=['Sbah Nour kbida dyli',' Kif sbhati ?',"T'as bien dormi ?","Tu me manques...",'Jveux te montrer qlq chose ?','Clique en dessous \u2764\ufe0f'];
   var i=0;
   function next(){
     if(i>=msgs.length){var c=document.getElementById('chContinue');if(c)c.classList.add('show');return;}
@@ -1901,17 +1884,76 @@ document.addEventListener('click',function(e){
 });
 
 // ================= CHAT SIMULATION =================
-var chatMessages=[
-  {who:'her',t:'Salut &#128522;'},
-  {who:'me',t:'Salut ! Comment tu vas ?'},
-  {who:'her',t:'Bien, et toi ? On se connaît même pas encore et tu me parles déjà &#128514;'},
-  {who:'me',t:"C'est vrai. Mais j'avais envie de te parler, c'est tout"},
-  {who:'her',t:'Ah bon ? &#128522;'},
-  {who:'me',t:"27 avril. Retiens cette date"},
-  {who:'her',t:'Pourquoi ?'},
-  {who:'me',t:"Parce qu'un jour, je crois qu'on va s'en souvenir tous les deux"},
-  {who:'her',t:'&#128522;&#128150; on verra bien'},
-  {who:'me',t:"J'ai préparé quelque chose pour toi. Descends, tu vas voir…"}
+var chatMessages = [
+    {
+    who: 'her',
+    t: 'Salut (tri9 d lah)'
+  },
+  {
+    who: 'her',
+    t: 'Dis moi des choses que je dis bcq !'
+  },
+  {
+    who: 'me',
+    t: "Hyper mziwna<br>Kanbghik xwiya<br>Mafiyaxi jo3<br>Bassl<br>Klit(wakha katkon ghir katkdb eliya)<br>"
+  },
+
+  {
+    who: 'her',
+    t: "Des choses que t'aimes chez moi ?"
+  },
+  {
+    who: 'me',
+    t: "Tu acceptes les gens que tu aimes inconditionnellement<br>T'es drôle<br>Ghatkon une maman formidable (tu as des trucs que les autres maman s3ib ikoun 3ndhom)<br>Tu es une épouse formidable (t'es toujours à mes côtés qd ça va mal et sans pour autant être dans l'envahissement)<br>Tu redistribues la bonne humeur naturellement"
+  },
+  {
+    who: 'me',
+    t: '5 choses hahahaaha'
+  },
+  {
+    who: 'her',
+    t: "J'en ai 50 ❤️"
+  },
+
+  {
+    who: 'me',
+    t: "4 choses que j'aime"
+  },
+  {
+    who: 'her',
+    t: "La musique<br>Le voyage<br>Manger<br>Instruire nos enfants"
+  },
+
+  {
+    who: 'me',
+    t: "3 choses que je n'aime pas"
+  },
+  {
+    who: 'her',
+    t: "Lghwat<br>Les personnes envahissante, blableuses, intrusives<br>Faire rire les gens en rabaissant quelqu'un"
+  },
+
+  {
+    who: 'me',
+    t: "2 choses que tu changerais en moi"
+  },
+  {
+    who: 'her',
+    t: "Scroller la nuit jusqu'à évanouissement<br>Ne pas stresser quand on reçoit beaucoup de monde 😂"
+  },
+
+  {
+    who: 'me',
+    t: "1 chose qui me rend unique"
+  },
+  {
+    who: 'her',
+    t: "Tu débordes de vie, d'énergie positive, te fréquenter rend la vie facile, tout devient possible ❤️"
+  },
+  {
+    who: 'me',
+    t: "🥹🥹🥹🥹🥹"
+  }
 ];
 function initChat(){
   var log=document.getElementById('chatlog');
