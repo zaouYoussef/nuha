@@ -692,6 +692,34 @@ section{position:relative;}
 #musicbtn.playing::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(240,192,64,.4);animation:mbring 1.6s ease-out infinite;}
 @keyframes mbring{0%{transform:scale(.8);opacity:1;}100%{transform:scale(1.4);opacity:0;}}
 
+
+/* ===== LES TROIS PLUS BELLES (WOW) ===== */
+.wowsec{padding:130px 5vw;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,45,107,.16),rgba(10,0,25,0) 65%),linear-gradient(180deg,var(--deep),#160018,var(--deep));}
+.wowsec .inn{max-width:1060px;margin:0 auto;position:relative;z-index:3;}
+.wowgrid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;margin:70px 0 40px;perspective:1400px;}
+.wowcard{position:relative;width:280px;height:345px;padding:13px 13px 60px 13px;background:linear-gradient(155deg,#fffdfa,#ffeef4 60%,#ffd9e6);border-radius:4px;cursor:pointer;box-shadow:0 30px 70px rgba(0,0,0,.55);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .5s ease;animation:flo 6s ease-in-out infinite;}
+.wowcard:nth-child(1){transform:rotate(-7deg);}
+.wowcard:nth-child(2){transform:rotate(2.5deg);animation-delay:.7s;}
+.wowcard:nth-child(3){transform:rotate(7deg);animation-delay:1.4s;}
+.wowcard:hover{transform:rotate(0deg) translateY(-14px) scale(1.07);box-shadow:0 40px 90px rgba(255,45,107,.4),0 0 0 1px rgba(240,192,64,.35);z-index:20;}
+.wowcard .photo-container{width:100%;height:100%;position:relative;overflow:hidden;border-radius:2px;background:#f4e3ea;}
+.wowcard .photo{width:100%;height:100%;object-fit:cover;display:block;}
+.wowcard::after{content:'';position:absolute;left:13px;right:13px;top:13px;bottom:13px;border-radius:2px;pointer-events:none;background:linear-gradient(160deg,rgba(255,255,255,.45),rgba(255,255,255,0) 35%,rgba(255,255,255,0) 60%,rgba(255,255,255,.14));}
+.wowcap{position:absolute;bottom:16px;left:8px;right:8px;font-family:'Dancing Script',cursive;font-size:22px;color:#7a2f4b;z-index:3;text-shadow:0 1px 2px rgba(255,255,255,.7);}
+.wowscr{position:absolute;top:13px;left:13px;right:13px;bottom:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:2;border-radius:2px;overflow:hidden;cursor:pointer;background:linear-gradient(45deg,#ff2d6b,#ff5e62);transition:opacity .8s ease;box-shadow:inset 0 0 40px rgba(90,0,40,.35);}
+.wowscr::before{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-22deg);animation:shine 3s ease-in-out infinite;}
+@keyframes shine{0%{left:-130%;}60%,100%{left:170%;}}
+.wowscr i{font-style:normal;font-size:42px;animation:hb 1.3s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,255,255,.8));}
+.wowscr b{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:2px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.35);}
+@keyframes hb{0%,100%{transform:scale(1);}50%{transform:scale(1.28) rotate(-6deg);}}
+.wowcard.revealed .wowscr{opacity:0;pointer-events:none;}
+.wowcard.revealed::before{content:'💖';position:absolute;left:50%;top:50%;font-size:64px;line-height:1;opacity:0;z-index:6;transform:translate(-50%,-50%) scale(.2) rotate(-15deg);animation:burst .95s ease-out forwards;}
+@keyframes burst{0%{opacity:1;transform:translate(-50%,-50%) scale(.2) rotate(-15deg);}100%{opacity:0;transform:translate(-50%,-78%) scale(2) rotate(14deg);}}
+@keyframes flo{0%,100%{margin-top:0;}50%{margin-top:-12px;}}
+.wow-note{font-family:'Dancing Script',cursive;font-size:23px;color:rgba(255,255,255,.72);margin-top:8px;}
+.wheart{position:absolute;bottom:-50px;font-size:20px;opacity:0;pointer-events:none;z-index:1;animation:rise linear infinite;}
+@keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0;}12%{opacity:.55;}85%{opacity:.35;}100%{transform:translateY(-115vh) rotate(30deg);opacity:0;}}
+
 </style>
 </head>
 <body>
@@ -1007,6 +1035,43 @@ section{position:relative;}
     <div class="rg" id="rgrid"></div>
   </div>
 </section>
+
+
+<!-- LES TROIS PLUS BELLES -->
+<section class="wowsec">
+  <div class="wheart" style="left:8%;animation-duration:9s;">&#128151;</div>
+  <div class="wheart" style="left:22%;animation-duration:12s;animation-delay:2.5s;">&#128149;</div>
+  <div class="wheart" style="left:38%;animation-duration:10s;animation-delay:1s;">&#128158;</div>
+  <div class="wheart" style="left:58%;animation-duration:13s;animation-delay:4s;">&#128151;</div>
+  <div class="wheart" style="left:74%;animation-duration:9.5s;animation-delay:2s;">&#128149;</div>
+  <div class="wheart" style="left:90%;animation-duration:11.5s;animation-delay:3.2s;">&#128158;</div>
+  <div class="inn">
+    <div class="rv" style="text-align:center;">
+      <span class="chnum">&#10024; LES PLUS BELLES &#10024;</span>
+      <h2 class="stitle">Trois photos, un seul c&#339;ur</h2>
+      <p class="scratch-title">Clique sur chaque photo pour la d&eacute;couvrir</p>
+    </div>
+    <div class="wowgrid">
+      <div class="wowcard" onclick="this.classList.add('revealed')">
+        <div class="photo-container"><img src="IMG_3647.HEIC" class="photo" alt=""></div>
+        <div class="wowscr"><i>&#128149;</i><b>Clique-moi</b></div>
+        <div class="wowcap">Le jour o&ugrave; tout a commenc&eacute;</div>
+      </div>
+      <div class="wowcard" onclick="this.classList.add('revealed')">
+        <div class="photo-container"><img src="IMG_3667.HEIC" class="photo" alt=""></div>
+        <div class="wowscr"><i>&#128149;</i><b>Clique-moi</b></div>
+        <div class="wowcap">Ton sourire, mon soleil</div>
+      </div>
+      <div class="wowcard" onclick="this.classList.add('revealed')">
+        <div class="photo-container"><img src="IMG_3774.HEIC" class="photo" alt=""></div>
+        <div class="wowscr"><i>&#128149;</i><b>Clique-moi</b></div>
+        <div class="wowcap">Toi &amp; moi, pour toujours</div>
+      </div>
+    </div>
+    <p class="wow-note rv d1">trois photos, mille raisons de t&apos;aimer &#128525;</p>
+  </div>
+</section>
+
 
 <section class="fus">
   <div class="inn">
