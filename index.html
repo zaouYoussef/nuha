@@ -731,6 +731,21 @@ section{position:relative;}
 .i-vcap{font-family:'Dancing Script',cursive;font-size:clamp(19px,3vw,26px);color:rgba(255,225,238,.95);margin-top:16px;text-shadow:0 0 20px rgba(255,45,107,.7);letter-spacing:.5px;}
 @media(max-height:700px){.i-vframe video{max-height:42vh;}.i-video{margin-top:14px;}.i-hb{margin-bottom:14px;}}
 
+
+/* ===== UN FILM DE NOUS ===== */
+.cin{padding:120px 5vw;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(240,192,64,.08),rgba(10,0,25,0) 60%),linear-gradient(180deg,var(--deep),#100013,var(--deep));text-align:center;}
+.cin .inn{max-width:1060px;margin:0 auto;}
+.cingrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px;margin:64px auto 0;max-width:1020px;}
+.cincard{background:var(--glass);border:1px solid rgba(240,192,64,.18);border-radius:22px;padding:12px 12px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45);transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .5s ease;position:relative;}
+.cincard:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 30px 70px rgba(255,45,107,.3),0 0 0 1px rgba(240,192,64,.4);z-index:10;}
+.cinmedia{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:3/4;background:#120016;}
+.cinmedia img,.cinmedia video{width:100%;height:100%;object-fit:cover;display:block;background:#120016;}
+.cincap{font-family:'Dancing Script',cursive;font-size:21px;color:rgba(255,225,238,.95);margin-top:12px;text-shadow:0 0 14px rgba(255,45,107,.5);}
+.cinplay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(5,0,15,.25);transition:opacity .4s ease;z-index:3;}
+.cinplay span{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,120,160,.95),#ff2d6b);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;padding-left:5px;box-shadow:0 0 0 6px rgba(255,255,255,.15),0 0 40px rgba(255,45,107,.8);animation:cinpulse 1.6s ease-in-out infinite;}
+@keyframes cinpulse{0%,100%{transform:scale(1);box-shadow:0 0 0 6px rgba(255,255,255,.15),0 0 40px rgba(255,45,107,.8);}50%{transform:scale(1.12);box-shadow:0 0 0 10px rgba(255,255,255,.08),0 0 55px rgba(240,192,64,.9);}}
+@media(max-width:560px){.cingrid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}.cinplay span{width:52px;height:52px;}}
+
 </style>
 </head>
 <body>
@@ -1115,6 +1130,57 @@ section{position:relative;}
   <canvas class="stfcanvas" id="starcanvas"></canvas>
   <div class="stfcap"><p>Même les étoiles se sont arrangées pour former un cœur, juste pour toi&#8230; &#10024;</p></div>
 </section>
+
+
+<!-- UN FILM DE NOUS -->
+<section class="cin" id="cin">
+  <div class="inn">
+    <div class="rv" style="text-align:center;">
+      <span class="chnum">&#127916;&#65039; UN FILM DE NOUS</span>
+      <h2 class="stitle">Nos plus beaux instants</h2>
+      <p class="scratch-title">quelques petits tr&eacute;sors, avant ma lettre</p>
+    </div>
+    <div class="cingrid">
+      <div class="cincard rv d1">
+        <div class="cinmedia"><img src="video/WhatsApp Image 2026-08-03 at 13.57.48.jpeg" alt=""></div>
+        <div class="cincap">Nos regards se croisent</div>
+      </div>
+      <div class="cincard rv d2">
+        <div class="cinmedia"><img src="video/WhatsApp Image 2026-08-03 at 13.57.49.jpeg" alt=""></div>
+        <div class="cincap">Et le monde s&apos;arr&ecirc;te</div>
+      </div>
+      <div class="cincard rv d3">
+        <div class="cinmedia">
+          <video src="video/WhatsApp Video 2026-08-03 at 13.53.53.mp4" preload="metadata" playsinline></video>
+          <div class="cinplay" onclick="cinPlay(this)"><span>&#9654;</span></div>
+        </div>
+        <div class="cincap">Un moment vol&eacute;</div>
+      </div>
+      <div class="cincard rv d4">
+        <div class="cinmedia">
+          <video src="video/WhatsApp Video 2026-08-03 at 13.56.34.mp4" preload="metadata" playsinline></video>
+          <div class="cinplay" onclick="cinPlay(this)"><span>&#9654;</span></div>
+        </div>
+        <div class="cincap">Toi, juste toi</div>
+      </div>
+      <div class="cincard rv d1">
+        <div class="cinmedia">
+          <video src="video/WhatsApp Video 2026-08-03 at 13.57.41.mp4" preload="metadata" playsinline></video>
+          <div class="cinplay" onclick="cinPlay(this)"><span>&#9654;</span></div>
+        </div>
+        <div class="cincap">Un fou rire &agrave; deux</div>
+      </div>
+      <div class="cincard rv d2">
+        <div class="cinmedia">
+          <video src="video/WhatsApp Video 2026-08-03 at 13.57.55.mp4" preload="metadata" playsinline></video>
+          <div class="cinplay" onclick="cinPlay(this)"><span>&#9654;</span></div>
+        </div>
+        <div class="cincap">Je t&apos;aime</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="ls">
   <div class="inn">
@@ -2674,6 +2740,24 @@ initSlideshow();initGallery();initTimeline();initReasons();initLetter();initReve
   initChat();initBouquet();initMusic();initVideos();initMemoryFlip();initScratch();initMap();initJar();initStars2();initLiveCounter();initPageNav();
   initVideoPause();
 }
+
+// CINEMA SECTION PLAY
+function cinPlay(ov){
+  var m=ov.parentNode; if(!m) return;
+  var v=m.querySelector('video'); if(!v) return;
+  if(v.paused){ v.play(); ov.style.opacity='0'; ov.style.pointerEvents='none'; }
+  else{ v.pause(); ov.style.opacity='1'; ov.style.pointerEvents='auto'; }
+}
+(function(){
+  var vs=document.querySelectorAll('.cinmedia video');
+  for(var i=0;i<vs.length;i++){
+    vs[i].addEventListener('ended',function(){
+      var ov=this.parentNode.querySelector('.cinplay');
+      if(ov){ov.style.opacity='1';ov.style.pointerEvents='auto';}
+    });
+  }
+})();
+
 </script>
 </body>
 </html>
