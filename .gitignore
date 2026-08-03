@@ -1,6 +1,4 @@
-# Ignore heavy raw MOV files for fast deployment (photos HEIC are committed)
-*.MOV
-*.mov
+# Temp/edge files only (videos MOV and photos HEIC are committed)
 *.HEIC.tmp
 
 # Ignore Python scripts and temp files
