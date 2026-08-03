@@ -652,6 +652,20 @@ section{position:relative;}
 @media(hover:none){#grain{animation:none;opacity:.05;}#petals{opacity:.8;}}
 @media(max-width:640px){#aurora{opacity:.38;}}
 
+
+/* LOVE CARDS */
+.love-section{padding:70px 6vw 90px;position:relative;}
+.love-section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,44px);text-align:center;background:linear-gradient(160deg,#fff,#ffcce0,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:42px;}
+.love-grid{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
+.love-card{background:var(--glass);border:1px solid rgba(255,45,107,.15);border-radius:18px;overflow:hidden;transition:border-color .3s ease,background .3s ease;}
+.love-card.open{border-color:rgba(255,45,107,.5);background:rgba(255,45,107,.06);}
+.love-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;color:#fff;font-size:16px;text-align:left;padding:18px 20px;cursor:pointer;font-family:inherit;letter-spacing:.2px;}
+.love-btn:hover{color:#ffcce0;}
+.love-btn span:last-child{color:var(--gold);font-size:20px;transition:transform .35s ease;flex-shrink:0;}
+.love-card.open .love-btn span:last-child{transform:rotate(45deg);}
+.love-content{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,opacity .4s ease,padding .4s ease;color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;padding:0 20px;}
+.love-card.open .love-content{max-height:400px;opacity:1;padding:0 20px 20px;}
+
 </style>
 </head>
 <body>
@@ -874,7 +888,7 @@ section{position:relative;}
 </section>
 
 <!-- POLAROID SCRATCH CARDS -->
-<section class="scratch">
+<section class="scratch" id="scratch">
   <div class="inn">
     <div class="rv" style="text-align:center;">
       <span class="slbl">Souvenirs à gratter</span>
@@ -909,15 +923,7 @@ section{position:relative;}
 
 
 
-<section class="vs">
-  <div class="inn">
-    <div class="rv" style="text-align:center;">
-      <span class="slbl">Nos vid&eacute;os</span>
-      <h2 class="stitle">Moments film&eacute;s</h2>
-    </div>
-    <div class="vgrid" id="vgrid"></div>
-  </div>
-</section>
+
 
 <section class="mf">
   <div class="inn">
@@ -939,15 +945,7 @@ section{position:relative;}
   </div>
 </section>
 
-<section class="mp">
-  <div class="inn">
-    <div class="rv" style="text-align:center;">
-      <span class="slbl">Nos endroits</span>
-      <h2 class="stitle">La carte de notre amour</h2>
-    </div>
-    <div class="mapwrap" id="mapwrap"></div>
-  </div>
-</section>
+
 
 <section class="rs">
   <div class="inn">
@@ -955,15 +953,6 @@ section{position:relative;}
     <div class="rv" style="text-align:center;">
       <span class="slbl">Pourquoi je t&apos;aime</span>
       <h2 class="stitle">Des raisons infinies&hellip;</h2>
-      <p style="color:rgba(255,255,255,.5);font-size:15px;margin-top:14px;">Clique sur le bocal pour piocher une raison au hasard.</p>
-    </div>
-    <div class="jarwrap rv">
-      <div class="jar" onclick="drawReason()">
-        <div class="jarlid"></div>
-        <div class="jarglass" id="jarglass"></div>
-      </div>
-      <div class="jarcount" id="jarcount">0 raison d&eacute;couverte</div>
-      <div class="jarhint">Clique sur le bocal</div>
     </div>
     <div class="rg" id="rgrid"></div>
   </div>
@@ -977,15 +966,15 @@ section{position:relative;}
       <h2 class="stitle">Notre avenir, à nous deux</h2>
     </div>
     <div class="fug">
-      <div class="fuc rv d1"><span class="fuico">&#127968;</span><div class="fuh">Une maison à nous</div><p class="fut">Un chez-nous rempli de rires, de café le matin et de ta présence tous les jours.</p></div>
+      <div class="fuc rv d1"><span class="fuico">&#127968;</span><div class="fuh">Une maison à nous</div><p class="fut">Un chez-nous rempli de rires, des bisous le matin et soir et de ta présence tous les jours.</p></div>
       <div class="fuc rv d2"><span class="fuico">&#9992;&#65039;</span><div class="fuh">Voyager partout</div><p class="fut">Découvrir le monde à deux, une valise, deux billets, mille souvenirs.</p></div>
-      <div class="fuc rv d3"><span class="fuico">&#128141;</span><div class="fuh">Vieillir ensemble</div><p class="fut">Toujours toi. Demain, dans dix ans, dans cinquante ans.</p></div>
+      <div class="fuc rv d3"><span class="fuico">&#128141;</span><div class="fuh">Vieillir ensemble</div><p class="fut">Toujours toi htan nmoto.</p></div>
       <div class="fuc rv d4"><span class="fuico">&#128118;</span><div class="fuh">Une grande famille</div><p class="fut">Et bien sûr&#8230; nos enfants, qui rempliront la maison de bruit et d'amour.</p></div>
     </div>
     <div class="fbig rv">
       <div class="num">11</div>
-      <div class="lbl2">enfants, tu as dit &#128514;&#128150;</div>
-      <p class="sm">Ok Nouhati, je te prends au mot. Onze petits toi-et-moi qui courent partout, et moi qui n'aurai plus jamais assez de mains &mdash; mais avec toi, je signe tout de suite.</p>
+      <div class="lbl2">enfants, sf tafa9na &#128514;&#128150;</div>
+      <p class="sm">Ok Nouhati. Onze petits toi-et-moi qui courent partout, et moi qui n'aurai plus jamais assez de mains &mdash; jrgl ana bghit un mini youssi et une mini nouha.</p>
     </div>
   </div>
 </section>
@@ -1025,9 +1014,117 @@ section{position:relative;}
   <p class="fp">Merci d&apos;exister. Merci d&apos;&ecirc;tre toi. Merci de m&apos;aimer.<br>Tu es mon soleil quand tout est sombre.<br>Ma paix dans le chaos. Mon tout.<br><br>Ce site n&apos;est qu&apos;une minuscule preuve<br>d&apos;un amour qui n&apos;a pas de fin.<br><br>&#8212; Youssi</p>
   <div class="fsecret">
     <button class="fsbtn" id="fsbtn" onclick="revealSecret()">Un dernier secret&#8230;</button>
-    <p class="fsmsg" id="fsmsg">P.S. &mdash; Si tu es arrivée jusqu'ici, c'est que tu as pris le temps de tout lire, tout regarder, tout ressentir. Merci. Sache juste une chose&nbsp;: tout ce que tu viens de voir, je le referais mille fois, rien que pour voir ton sourire en le découvrant. Je t'aime, aujourd'hui, demain, et tous les jours d'après. &#128150;</p>
+    <p class="fsmsg" id="fsmsg"> TWAHAXTK BZZZZZZZZZZZZZ...ZZZZZZZZZZZZF WLH 😭</p>
   </div>
-  <button class="freplay" onclick="location.reload()">&#8635; Revivre notre histoire</button>
+</section>
+
+
+<section class="love-section">
+  <h2> Des choses que j'aime chez toi ❤️</h2>
+
+  <div class="love-grid">
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>1. Ton magnifique sourire</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Mli kanxof dhika dylk vrm elle m'illumine ma journée dès que je pense à toi. ☀️❤️
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>2. Ta façon de rire à mes blagues</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Même quand mes blagues sont nulles, tu arrives toujours à rire. Et ça me rend tellement heureux. 😂❤️
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>3. Ton soutien inconditionnel</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Peu importe les difficultés, tu crois toujours en moi et tu me donnes la force d'avancer. Merci d'être toujours là. 💜
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>4. Katsa3afni</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Merceeey Nouhati.
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>5. Toutes tes petites attentions</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Les petits gestes que tu fais sans même t'en rendre compte me touchent énormément. 🥹
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>6. Ta passion pour ce que tu aimes</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        J'adore te voir parler de ce qui te passionne. Tes yeux brillent et c'est magnifique.
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>7. Tu te souviens des moindres détails</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Tu te rappelles toujours des petites choses qui comptent pour moi. Ça montre à quel point tu tiens à nous. ❤️
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>8. Tes adorables messages vocaux</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        J'aimerais pouvoir écouter ta voix toute la journée. Elle m'apaise et me fait sourire maxi 1,5
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>9. Je me sens chez moi avec toi</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        Peu importe où nous sommes, tant que tu es avec moi, je me sens à ma place. 🫂
+      </div>
+    </div>
+
+    <div class="love-card">
+      <button class="love-btn">
+        <span>10. Notre futur ensemble</span>
+        <span>+</span>
+      </button>
+      <div class="love-content">
+        J'ai hâte de vivre encore mille aventures avec toi et de construire notre avenir main dans la main inxaelah ya rebi. ❤️✨
+      </div>
+    </div>
+
+  </div>
 </section>
 
 </main>
@@ -1060,16 +1157,15 @@ function isVideo(src){return /\.(mov|mp4|webm|m4v)$/i.test(src);}
 function thumbUrl(name){if(!isVideo(name))return encodeURI(name);return encodeURI(name.replace(/.[^.]+$/i,'')+'.HEIC');}
 
 var reasons=[
-  {i:'&#128522;',t:'Ton sourire qui éclaire même les jours les plus sombres'},
-  {i:'&#127925;',t:'Ta façon de chanter sans te soucier de personne'},
-  {i:'&#128514;',t:'Ton rire contagieux qui me fait rire aux larmes'},
+  {i:'&#128522;',t:'Ton sourire mziwna aaaaaaa'},
+  {i:'&#127925;',t:'Sawtk douuuuux'},
+  {i:'&#128514;',t:'Dhika dyalk'},
   {i:'&#127769;',t:'Nos conversations tard dans la nuit qui n’en finissent jamais'},
-  {i:'&#128170;',t:'Ta force et ta résilience qui m’inspirent chaque jour'},
+  {i:'&#128170;',t:'Ta force et ta résilience qui m’inspirent chaque jour kbida dyli'},
   {i:'&#127800;',t:'Ta douceur et ta gentillesse avec tout le monde'},
   {i:'&#10025;',t:'Le fait que tu es toi — unique, irremplaçable, parfaite'},
-  {i:'&#127968;',t:'Le sentiment de «chez moi» que j’ai dans tes bras'},
-  {i:'&#128065;',t:'Tes yeux qui me disent tout sans un seul mot'},
-  {i:'&#129303;',t:'Tes câlins qui guérissent absolument tout'},
+  {i:'&#127968;',t:'Le sentiment de «chez moi» avec toi'},
+  {i:'&#128065;',t:'3winatk" qui me disent tout sans un seul mot'},
   {i:'&#127775;',t:'Ta façon de me voir mieux que je ne me vois moi-même'},
   {i:'&#127919;',t:'Ta passion et ta détermination dans tout ce que tu fais'},
 ];
@@ -1607,9 +1703,10 @@ function goSlide(n){
 // toute dernière photo, on est amené automatiquement vers les messages.
 var galleryIndex=0;
 var gstoryBuilt=false;
-var GALLERY_MS=4500,galleryTimer=null;
+var GALLERY_MS=4500,galleryTimer=null,galleryDone=false;
 function galleryStop(){if(galleryTimer){clearInterval(galleryTimer);galleryTimer=null;}}
 function galleryAuto(){
+  if(galleryDone) return;
   galleryStop();
   galleryTimer=setInterval(function(){
     if(document.hidden) return;
@@ -1659,6 +1756,7 @@ function renderGalleryItem(idx){
   if(!media||!allPhotos.length) return;
   idx=((idx%allPhotos.length)+allPhotos.length)%allPhotos.length;
   galleryIndex=idx;
+  galleryDone=false;
   media.style.transition='opacity .3s ease';
   media.style.opacity=0;
   setTimeout(function(){
@@ -1712,11 +1810,12 @@ function finishGalleryStory(){
   if(gstoryEnding) return;
   gstoryEnding=true;
   var end=document.getElementById('gstoryEnd');
-  var target=document.getElementById('messagesSection');
+  var target=document.getElementById('scratch');
   if(!end||!target){gstoryEnding=false;return;}
   end.classList.add('show');
   setTimeout(function(){
     target.scrollIntoView({behavior:'smooth',block:'start'});
+      galleryDone=true;
     setTimeout(function(){
       end.classList.remove('show');
       gstoryEnding=false;
@@ -1796,7 +1895,7 @@ var llines=[
   'Nouhati, mon amour,','',
   "Il y a des soirs où je me retrouve à défiler nos photos, et les larmes me viennent toutes seules. Non pas de tristesse — mais d’une joie si [pure], si profonde, que mon cœur ne sait plus comment la contenir.",
   '',"Tout a commencé le 27 avril, un simple message. Je ne savais pas encore que ces quelques mots allaient devenir toute mon histoire. Le 10 mai, je t'ai dit [je t'aime] sans même y réfléchir. Et le 27 mai, quand tu me l'as dit à ton tour, j'ai cru que mon cœur allait sortir de ma poitrine.",
-  '',"Puis il y a eu le 14 juillet — le jour où je t'ai enfin vue, en vrai, devant moi. Et le lendemain, le 15 juillet, notre premier bisou. Des dates gravées pour toujours, parce que c'est là que mon [avant] et mon [après] se sont séparés.",
+  '',"Puis il y a eu le 14 juillet — le jour où je t'ai enfin vue, en vrai, devant moi. Et le lendemain, le 15 juillet, awl oba. Des dates gravées pour toujours, parce que c'est là que mon [avant] et mon [après] se sont séparés.",
   '',"Tu es cette [rare] personne qui fait que la vie a du sens. Chaque instant passé avec toi est gravé en or dans ma mémoire. Chaque regard, chaque sourire, chaque moment banal qui devient extraordinaire parce que c’est avec [toi].",
   '',"Je ne sais pas combien de belles choses j’aurais à traverser dans cette vie, mais je sais que sans toi, elles auraient beaucoup moins de goût.",
   '',"Tu es mon matin et mon soir. Ma paix et mon aventure. Mon passé et mon futur. Mon [tout]. Et un jour, notre maison sera pleine de rires d'enfants — même onze, si c'est toi qui le dis.",
@@ -2037,11 +2136,9 @@ function initVideos(){
 // ================= MEMORY FLIP CARDS =================
 var memoryFlips=[
   {ico:'&#128222;',lbl:'Premier appel',txt:"On a parlé pendant des heures sans voir le temps passer."},
-  {ico:'&#128163;',lbl:'Notre 1ère dispute',txt:'On s\'est disputés, puis réconciliés encore plus forts.'},
-  {ico:'&#128514;',lbl:'Fou rire',txt:'Un fou rire dont je me souviendrai toute ma vie.'},
-  {ico:'&#127881;',lbl:'Surprise',txt:"Le jour où je t'ai préparé une surprise et vu ton sourire s'illuminer."},
-  {ico:'&#127756;',lbl:'Un jour ordinaire',txt:'Un jour banal, mais parfait, juste parce que tu étais là.'},
-  {ico:'&#128149;',lbl:'Ce moment-là',txt:"Ce moment où j'ai su que c'était toi, pour de vrai."}
+  {ico:'&#128163;',lbl:'Première dispute',txt:'On s\'est disputés, puis réconciliés encore plus forts and kant ela pikini hhhhh'},
+  {ico:'&#127881;',lbl:'Premier cadeau',txt:"Kan le bouquet et le sac"},
+  {ico:'&#127756;',lbl:'Premier bisou',txt:'F hnika tqt hhhhh'},
 ];
 function initMemoryFlip(){
   var g=document.getElementById('mfgrid');
@@ -2058,7 +2155,7 @@ function initMemoryFlip(){
 var scratchData=[
   {txt:'Tu es la plus belle chose qui me soit arrivée &#128150;'},
   {txt:'Je pense à toi plus que tu ne le crois &#10024;'},
-  {txt:'On sera encore plus heureux demain qu\'aujourd\'hui &#127775;'}
+  {txt:'Bghit 11 enfants inxaelah'}
 ];
 function initScratch(){
   var g=document.getElementById('scgrid');
@@ -2389,7 +2486,22 @@ document.addEventListener('visibilitychange',function(){
 
 // INIT
 function initMain(){
-  initSlideshow();initGallery();initTimeline();initReasons();initLetter();initReveal();initCounters();
+  
+// LOVE CARDS : accordéon
+(function(){
+  var btns=document.querySelectorAll('.love-btn');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(){
+      var card=this.parentNode;
+      var open=card.classList.contains('open');
+      var opened=document.querySelectorAll('.love-card.open');
+      for(var j=0;j<opened.length;j++) opened[j].classList.remove('open');
+      if(!open) card.classList.add('open');
+    });
+  }
+})();
+
+initSlideshow();initGallery();initTimeline();initReasons();initLetter();initReveal();initCounters();
   initChat();initBouquet();initMusic();initVideos();initMemoryFlip();initScratch();initMap();initJar();initStars2();initLiveCounter();initPageNav();
   initVideoPause();
 }
