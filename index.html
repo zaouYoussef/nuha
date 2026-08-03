@@ -680,6 +680,18 @@ section{position:relative;}
 @keyframes oib{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.2);}}
 @keyframes oifade{from{opacity:0;}to{opacity:1;}}
 
+
+/* MUSIC BUTTON */
+#musicbtn{position:fixed;bottom:22px;right:22px;z-index:910;width:58px;height:58px;border-radius:50%;border:1px solid rgba(240,192,64,.5);background:radial-gradient(circle at 30% 30%,rgba(255,45,107,.35),rgba(20,0,40,.92));color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 26px rgba(255,45,107,.4);backdrop-filter:blur(6px);transition:transform .3s ease,box-shadow .3s ease;}
+#musicbtn:hover{transform:scale(1.1);box-shadow:0 0 36px rgba(255,45,107,.65);}
+#musicbtn::after{content:'Appuie pour la musique';position:absolute;right:66px;top:50%;transform:translateY(-50%);font-size:11px;letter-spacing:1px;color:#fff;background:rgba(10,0,25,.85);padding:6px 12px;border-radius:20px;border:1px solid rgba(240,192,64,.35);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+#musicbtn:hover::after{opacity:1;}
+#musicbtn.playing{animation:mbpulse 1.6s ease-in-out infinite;}
+#musicbtn.playing::after{content:'Musique en cours';}
+@keyframes mbpulse{0%,100%{box-shadow:0 0 26px rgba(255,45,107,.4);}50%{box-shadow:0 0 46px rgba(240,192,64,.85);}}
+#musicbtn.playing::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(240,192,64,.4);animation:mbring 1.6s ease-out infinite;}
+@keyframes mbring{0%{transform:scale(.8);opacity:1;}100%{transform:scale(1.4);opacity:0;}}
+
 </style>
 </head>
 <body>
@@ -754,6 +766,7 @@ section{position:relative;}
 </div>
 
 <!-- LOCK SCREEN -->
+<button id="musicbtn" aria-label="Activer la musique">&#127925;</button>
 <div id="lock">
   <div class="lbg" id="lbg">
     <div class="lneb" style="width:700px;height:700px;background:radial-gradient(circle,rgba(160,0,90,.28),transparent);top:-150px;left:-150px;animation-duration:14s;"></div>
@@ -2152,11 +2165,24 @@ function initMusic(){
   if(!viz||viz.dataset.built) return; viz.dataset.built='1';
   for(var i=0;i<24;i++){var b=document.createElement('div');b.className='vbar';b.style.height=(6+Math.random()*10)+'px';viz.appendChild(b);}
 }
-function toggleMusic(){
-  musicPlaying=!musicPlaying;
-  document.getElementById('mcart').classList.toggle('playing',musicPlaying);
-  document.getElementById('mcbtn').innerHTML=musicPlaying?'&#10073;&#10073;':'&#9658;';
+var MUSIC_URL='Elissa%20-%20Ayami%20Bik%20(Audio)%20%20%D8%A7%D9%84%D9%8A%D8%B3%D8%A7%20-%20%D8%A3%D9%8A%D8%A7%D9%85%D9%8A%20%D8%A8%D9%8A%D9%83.mp3';
+var bgm=null;
+function toggleBgm(){
+  if(!bgm){bgm=new Audio(MUSIC_URL);bgm.loop=true;bgm.volume=.9;}
+  if(bgm.paused){bgm.play().then(function(){musicPlaying=true;syncMusicUI();}).catch(function(){});}
+  else{bgm.pause();musicPlaying=false;syncMusicUI();}
+}
+function syncMusicUI(){
+  var mb=document.getElementById('musicbtn');
+  if(mb){mb.classList.toggle('playing',musicPlaying);mb.setAttribute('aria-label',musicPlaying?'Musique en cours':'Activer la musique');}
+  var mc=document.getElementById('mcart');if(mc)mc.classList.toggle('playing',musicPlaying);
+  var bt=document.getElementById('mcbtn');if(bt)bt.innerHTML=musicPlaying?'&#10073;&#10073;':'&#9658;';
   document.querySelectorAll('.vbar').forEach(function(b){b.classList.toggle('playing',musicPlaying);});
+}
+var musicInitBtn=document.getElementById('musicbtn');
+if(musicInitBtn)musicInitBtn.addEventListener('click',function(e){e.stopPropagation();toggleBgm();});
+function toggleMusic(){
+  toggleBgm();
 }
 
 // ================= VIDEO CATEGORIES =================
